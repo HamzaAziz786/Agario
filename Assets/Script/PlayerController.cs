@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 	private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
 	public Transform followingTarget;
-	private float followingSpeed = 30.0f;
+	private float followingSpeed = 50.0f;
 	private float boundary; // boundary for preventing to overlap
 
 	public bool eatableStart;
