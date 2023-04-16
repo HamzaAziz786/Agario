@@ -8,6 +8,7 @@ TagManager:
   - SpawnPoint
   - User
   - OriginalPlayer
+  - Virus
   layers:
   - Default
   - TransparentFX

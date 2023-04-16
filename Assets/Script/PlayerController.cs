@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 	private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
 	public Transform followingTarget;
-	private float followingSpeed = 50.0f;
+	private float followingSpeed = 15.0f;
 	private float boundary; // boundary for preventing to overlap
 
 	public bool eatableStart;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 	private float eatableTime = 15.0f; // *should be 30sec
 
 	Queue<GameObject> queue = new Queue<GameObject>();
-
+	public bool IsSplit = true;
 	// Use this for initialization
 	// all of the Start() is called on the first frame that the script is active
 	void Start ()
@@ -71,12 +71,12 @@ public class PlayerController : MonoBehaviour
 	// and it is called before rendering a frame
 	void Update ()
 	{
-		bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
+		//bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
 
-		if (isSpace && mass >= splitLimit)
-		{
-			Split();
-		}
+		//if (isSpace && mass >= splitLimit )
+		//{
+		//	Split();
+		//}
 
 		if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
 			transform.LookAt (followingTarget.position);
@@ -84,8 +84,9 @@ public class PlayerController : MonoBehaviour
 		}
 
 		followingSpeed = 30.0f * ((float)initMass / (float)mass); // the bigger, the slower 
-		//Debug.Log ("followingSpeed: " + followingSpeed  + " = " + "30.0f " + " * " + initMass + " / " + mass);
-	}
+        transform.Translate(0.0f, 0.0f, followingSpeed * Time.deltaTime);
+        //Debug.Log ("followingSpeed: " + followingSpeed  + " = " + "30.0f " + " * " + initMass + " / " + mass);
+    }
 
 	// FixedUpdate() is called before performing any physics calculations
 	void FixedUpdate ()
@@ -285,7 +286,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//Debug.Log (queue.Count);
 		yield return new WaitForSeconds(time);
-
+		IsSplit = true;
 		if (queue.Count > 1) 
 		{
 			foreach (GameObject g in queue) 
@@ -333,4 +334,13 @@ public class PlayerController : MonoBehaviour
 		queue.Enqueue (g);
 		StartCoroutine (DequeueAllAfterWait (1.0f));
 	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+		if (collision.gameObject.tag == "Virus" /*&& IsSplit==true*/)
+		{
+			Debug.Log("Hit");
+			Split();
+			IsSplit = false;
+		}
+    }
 }

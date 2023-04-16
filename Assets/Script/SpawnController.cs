@@ -25,7 +25,7 @@ public class SpawnController : MonoBehaviour
         InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
     }
 
-    void SpawnPickup()
+   public  void SpawnPickup()
     {
         Vector3 randomPostion = GenerateRandomPosition();
 
