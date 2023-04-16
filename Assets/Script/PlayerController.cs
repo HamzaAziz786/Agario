@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 		SetTotalScoreText ();
 		SetMassText ();
 
-		boundary = transform.localScale.x * 3;
+		boundary = transform.localScale.x * .5f;
 
 		eatable = false;
 		eatableStart = false;
@@ -71,12 +71,12 @@ public class PlayerController : MonoBehaviour
 	// and it is called before rendering a frame
 	void Update ()
 	{
-		//bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
+		bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
 
-		//if (isSpace && mass >= splitLimit )
-		//{
-		//	Split();
-		//}
+		if (isSpace && mass >= splitLimit)
+		{
+			Split();
+		}
 
 		if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
 			transform.LookAt (followingTarget.position);
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		followingSpeed = 30.0f * ((float)initMass / (float)mass); // the bigger, the slower 
-        transform.Translate(0.0f, 0.0f, followingSpeed * Time.deltaTime);
+       
         //Debug.Log ("followingSpeed: " + followingSpeed  + " = " + "30.0f " + " * " + initMass + " / " + mass);
     }
 
@@ -146,28 +146,29 @@ public class PlayerController : MonoBehaviour
 			spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime, 
 				spawnControllerInstance.spawnDelay);
 		}
-		//else if(collider.gameObject.CompareTag("OriginalPlayer"))
-		//{
-		//	PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
-		//	int userMass = CollidedObjectPlayerController.GetMass();
+		else if (collider.gameObject.CompareTag("OriginalPlayer"))
+		{
+			PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
+			int userMass = CollidedObjectPlayerController.GetMass();
 
-		//	if (mass > userMass) {
-		//		Debug.Log ("mass > userMass: " + mass + " > " + userMass);
-		//		Eat (CollidedObject);
-		//		collider.gameObject.SetActive(false);
-		//	}
+			if (mass > userMass)
+			{
+				Debug.Log("mass > userMass: " + mass + " > " + userMass);
+				Eat(CollidedObject);
+				collider.gameObject.SetActive(false);
+			}
 
-		//	// run SpawnPickup() for spawning again
-		//	spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime, 
-		//		spawnControllerInstance.spawnDelay);
-		//}
-		else if(collider.gameObject.CompareTag("Virus") && IsSplit == true)
+			// run SpawnPickup() for spawning again
+			spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
+				spawnControllerInstance.spawnDelay);
+		}
+		//else if(collider.gameObject.CompareTag("Virus") && IsSplit == true)
 
-        {
-            Debug.Log("Hit");
-            Split();
-            IsSplit = false;
-        }
+  //      {
+  //          Debug.Log("Hit");
+  //          Split();
+  //          IsSplit = false;
+  //      }
     }
 
 //	// for merging divided mass to original
@@ -273,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
 		Faster (splittedPickup); // make splitted one faster in short time
 
-		splittedPickup.gameObject.tag = "User";
+		//splittedPickup.gameObject.tag = "User";
 	}
 
 //	// Eject mass of mine
