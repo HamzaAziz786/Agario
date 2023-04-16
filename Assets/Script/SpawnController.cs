@@ -9,6 +9,7 @@ public class SpawnController : MonoBehaviour
 {
     //the pickup prefab assigned via the Inspector
     public GameObject pickupPrefab;
+    public GameObject VirusPrefabs;
     private GameObject spawnedPickup;
 
     public float spawnTime;
@@ -19,6 +20,7 @@ public class SpawnController : MonoBehaviour
 
     public int totalNumberOfPickups;
     public int currentNumberOfPickups = 0;
+
    
     void Start()
     {
@@ -32,7 +34,10 @@ public class SpawnController : MonoBehaviour
         // instantiate (create) the pickup prefab with the above position and rotation
         spawnedPickup = Instantiate(pickupPrefab, randomPostion, transform.rotation);
         currentNumberOfPickups++;
-
+        if (currentNumberOfPickups % 20 == 0)
+        {
+            Instantiate(VirusPrefabs, randomPostion, transform.rotation);
+        }
         // change color
         ChangeColor(spawnedPickup);
 

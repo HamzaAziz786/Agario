@@ -27,12 +27,12 @@ public class PlayerController : MonoBehaviour
 
 	//for spliting
 	private GameObject splittedPickup;
-	private const float splitingSpeed = 150.0f; //  A const variable is one whose value cannot be changed.
+	private const float splitingSpeed = 5f; //  A const variable is one whose value cannot be changed.
 	private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
 	private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
 	public Transform followingTarget;
-	private float followingSpeed = 15.0f;
+	private float followingSpeed = .2f;
 	private float boundary; // boundary for preventing to overlap
 
 	public bool eatableStart;
@@ -146,22 +146,29 @@ public class PlayerController : MonoBehaviour
 			spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime, 
 				spawnControllerInstance.spawnDelay);
 		}
-		else if(collider.gameObject.CompareTag("OriginalPlayer"))
-		{
-			PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
-			int userMass = CollidedObjectPlayerController.GetMass();
+		//else if(collider.gameObject.CompareTag("OriginalPlayer"))
+		//{
+		//	PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
+		//	int userMass = CollidedObjectPlayerController.GetMass();
 
-			if (mass > userMass) {
-				Debug.Log ("mass > userMass: " + mass + " > " + userMass);
-				Eat (CollidedObject);
-				collider.gameObject.SetActive(false);
-			}
+		//	if (mass > userMass) {
+		//		Debug.Log ("mass > userMass: " + mass + " > " + userMass);
+		//		Eat (CollidedObject);
+		//		collider.gameObject.SetActive(false);
+		//	}
 
-			// run SpawnPickup() for spawning again
-			spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime, 
-				spawnControllerInstance.spawnDelay);
-		}
-	}
+		//	// run SpawnPickup() for spawning again
+		//	spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime, 
+		//		spawnControllerInstance.spawnDelay);
+		//}
+		else if(collider.gameObject.CompareTag("Virus") && IsSplit == true)
+
+        {
+            Debug.Log("Hit");
+            Split();
+            IsSplit = false;
+        }
+    }
 
 //	// for merging divided mass to original
 //	void OnTriggerEnter(Collider collider)
@@ -332,15 +339,7 @@ public class PlayerController : MonoBehaviour
 	void Faster(GameObject g)
 	{
 		queue.Enqueue (g);
-		StartCoroutine (DequeueAllAfterWait (1.0f));
+		StartCoroutine (DequeueAllAfterWait (.2f));
 	}
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-		if (collision.gameObject.tag == "Virus" /*&& IsSplit==true*/)
-		{
-			Debug.Log("Hit");
-			Split();
-			IsSplit = false;
-		}
-    }
+    
 }

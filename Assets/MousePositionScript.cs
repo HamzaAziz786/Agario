@@ -7,7 +7,7 @@ public class MousePositionScript : MonoBehaviour
 
 
     public float distanceFromCamera = 10f;
-    public float movementSpeed = 60f;
+    public float movementSpeed = .3f;
 
     void LateUpdate()
     {
@@ -17,7 +17,7 @@ public class MousePositionScript : MonoBehaviour
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         targetPosition.y = transform.position.y;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed /** Time.deltaTime*/);
     }
 
 
