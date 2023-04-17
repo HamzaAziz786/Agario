@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
 	//for spliting
 	private GameObject splittedPickup;
-	private const float splitingSpeed = .5f; //  A const variable is one whose value cannot be changed.
+	private const float splitingSpeed = .2f; //  A const variable is one whose value cannot be changed.
 	private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
 	private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
 	public bool eatableStart;
 	public bool eatable;
-	private float eatableTime = 5f; // *should be 30sec
+	private float eatableTime = 1f; // *should be 30sec
 
 	Queue<GameObject> queue = new Queue<GameObject>();
 	public bool IsSplit = true;
@@ -73,9 +73,12 @@ public class PlayerController : MonoBehaviour
 	{
 		bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
 
-		if (isSpace && mass >= splitLimit)
+		if (isSpace && mass >= splitLimit && IsSplit==true)
 		{
-			Split();
+			IsSplit = false;
+
+            Split();
+			StartCoroutine(nameof(ResplitEnable));
 		}
 
 		if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
@@ -87,9 +90,14 @@ public class PlayerController : MonoBehaviour
        
         //Debug.Log ("followingSpeed: " + followingSpeed  + " = " + "30.0f " + " * " + initMass + " / " + mass);
     }
-
-	// FixedUpdate() is called before performing any physics calculations
-	void FixedUpdate ()
+	IEnumerator ResplitEnable()
+	{
+		yield return new WaitForSeconds(10f);
+		IsSplit = true;
+		
+    }
+    // FixedUpdate() is called before performing any physics calculations
+    void LateUpdate ()
 	{
 		if (queue.Count != 0) {
 			// if gameObject is in the queue, make it ineatable and get it move with splitting speed
@@ -295,7 +303,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//Debug.Log (queue.Count);
 		yield return new WaitForSeconds(time);
-		IsSplit = true;
+		
 		if (queue.Count > 1) 
 		{
 			foreach (GameObject g in queue) 
@@ -307,10 +315,13 @@ public class PlayerController : MonoBehaviour
 		{
 			queue.Dequeue ();
 		}
+
 		else {
 			Debug.Log ("Nothing in queue");
 		}
-	}
+
+        
+    }
 
 	// make divided one eatable adding properties of Rigidbody and isKinematic after some time later.
 	IEnumerator SetEatable(float t)
@@ -320,9 +331,9 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(t);
 		eatable = true; // make eatable true after that t time later 
 		Debug.Log ("SetEatable!!");
-
-		// if it doesn't have rigidbody, make it
-		if (!gameObject.GetComponent<Rigidbody> ()) {
+        
+        // if it doesn't have rigidbody, make it
+        if (!gameObject.GetComponent<Rigidbody> ()) {
 			Rigidbody rigidbody = gameObject.AddComponent<Rigidbody> ();
 			rigidbody.isKinematic = true;
 		}
@@ -342,6 +353,7 @@ public class PlayerController : MonoBehaviour
 	{
 		queue.Enqueue (g);
 		StartCoroutine (DequeueAllAfterWait (.2f));
+		Destroy(g);
 	}
     
 }
