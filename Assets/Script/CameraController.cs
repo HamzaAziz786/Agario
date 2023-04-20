@@ -15,6 +15,10 @@ public class CameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (pointer == null)
+		{
+			pointer = GameObject.FindGameObjectWithTag("OriginalPlayer") ;
+        }
 		massControllerInstance = massController.GetComponent<MassController> ();
 
 		offset = transform.position - pointer.transform.position;
@@ -33,7 +37,11 @@ public class CameraController : MonoBehaviour {
 			offset.y = offset.y + (totalMass * 0.1f);
 			prevTotalMass = totalMass;
 		}
-	}
+        if (pointer == null)
+        {
+            pointer = GameObject.FindGameObjectWithTag("OriginalPlayer");
+        }
+    }
 	
 	// LateUpdate() runs every frame like update()
     // but it is guaranteed to run after all items have been processed
