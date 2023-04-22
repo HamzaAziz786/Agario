@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 Eat(CollidedObject);
-                Destroy(collider.gameObject);
+                Destroy(this.gameObject);
             }
 
             // run SpawnPickup() for spawning again
@@ -285,10 +285,10 @@ public class PlayerController : MonoBehaviour
         if (splittedPickup == null)
         {
             
-            splittedPickup = (GameObject)Instantiate(this.gameObject, transform.localPosition, transform.rotation);
+            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(0).transform.position, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
 
-            splittedPickup.gameObject.tag = "OriginalPlayer";
+            splittedPickup.gameObject.tag = "User";
         }
         else if (splittedPickup != null)
         {
@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour
             splittedPickup = (GameObject)Instantiate(this.gameObject, transform.localPosition, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
 
-            splittedPickup.gameObject.tag = "OriginalPlayer";
+            splittedPickup.gameObject.tag = "User";
         }
     }
 
