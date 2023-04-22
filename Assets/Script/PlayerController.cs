@@ -199,6 +199,22 @@ public class PlayerController : MonoBehaviour
             spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
                 spawnControllerInstance.spawnDelay);
         }
+        else if (collider.gameObject.CompareTag("Virus"))
+        {
+            PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
+            int userMass = CollidedObjectPlayerController.GetMass();
+
+            if (mass > userMass)
+            {
+                Debug.Log("mass > userMass: " + mass + " > " + userMass);
+                Eat(CollidedObject);
+                Destroy(this.gameObject);
+            }
+
+            // run SpawnPickup() for spawning again
+            spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
+                spawnControllerInstance.spawnDelay);
+        }
 
     }
 

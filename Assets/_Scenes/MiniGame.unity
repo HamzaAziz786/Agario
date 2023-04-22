@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 42227c00e22771f498a8e6b97fa17ab2, type: 2}
 --- !u!1 &79601524
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +359,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!23 &117905442
 MeshRenderer:
@@ -1342,13 +1342,15 @@ GameObject:
   - component: {fileID: 1238104790}
   - component: {fileID: 1238104789}
   - component: {fileID: 1238104788}
+  - component: {fileID: 1238104793}
+  - component: {fileID: 1238104794}
   m_Layer: 0
   m_Name: Ai
-  m_TagString: OriginalPlayer
+  m_TagString: Virus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1238104788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,7 +1365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initMass: 25
   prevMass: 0
-  mass: 25
+  mass: 250
   pickupMass: 0
   totalScoreText: {fileID: 1500936223}
   massText: {fileID: 1442502661}
@@ -1395,7 +1397,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6fc01834d482c4342b7eb292fe527275, type: 2}
+  - {fileID: 2100000, guid: e404cbf76381d5c488aeafbde27d8242, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1446,13 +1448,53 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238104787}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9491594, y: 0, z: -111.05424}
+  m_LocalPosition: {x: -1.9491594, y: 0, z: -21}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1238104793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238104787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d661e320f9d66344ab5b87a568c1e82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiController: {fileID: 0}
+  Player: {fileID: 0}
+  xRange: 10
+  yRange: 5
+  zRange: 10
+  moveInterval: 2
+--- !u!195 &1238104794
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238104787}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1363894271
 GameObject:
   m_ObjectHideFlags: 0
