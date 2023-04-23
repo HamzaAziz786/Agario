@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    int GetMass()
+    public int GetMass()
     {
         return mass;
     }

@@ -4,21 +4,23 @@ using UnityEngine;
 using UnityEngine.AI;
 public class AI : MonoBehaviour
 {
+    public static AI aiInstance;
     public NavMeshAgent aiController;
     public GameObject Player;
     public float xRange = 10f;
     public float yRange = 5f;
     public float zRange = 10f;
     public float moveInterval = 2f; // time interval to move to a new random position
-
+    public int mass;
     private void Awake()
     {
+        aiInstance = this;
         aiController = GetComponent<NavMeshAgent>();
     }
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
-        InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
+       // InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
     }
     void Update()
     {
@@ -38,5 +40,40 @@ public class AI : MonoBehaviour
 
         // move the object to the new random position
         transform.position = new Vector3(randomX, randomY, randomZ) ;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("OriginalPlayer"))
+        {
+            PlayerController CollidedObjectPlayerController = other.GetComponent<PlayerController>();
+            int userMass = CollidedObjectPlayerController.GetMass();
+            if (mass< userMass)
+            {
+                Destroy(this.gameObject);
+            }
+            else if(mass > userMass)
+            {
+                Destroy(other.gameObject);
+
+            }
+
+
+
+        }
+       //else if (other.gameObject.CompareTag("Pickup"))
+       // {
+           
+       //     Destroy(other.gameObject);
+       //     Eat();
+       // }
+    }
+    void Eat()
+    {
+       
+        mass = mass + 1;
+        this.transform.localScale = new Vector3(
+            this.transform.localScale.x + mass, 
+            this.transform.localScale.y + mass, 
+            this.transform.localScale.z + mass);
     }
 }

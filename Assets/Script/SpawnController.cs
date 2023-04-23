@@ -11,17 +11,18 @@ public class SpawnController : MonoBehaviour
     public GameObject pickupPrefab;
     public GameObject VirusPrefabs;
     private GameObject spawnedPickup;
+    
 
     public float spawnTime;
     public float spawnDelay;
-    
+  
     private int mapsizeX = 500;
     private int mapsizeZ = 500;
 
     public int totalNumberOfPickups;
     public int currentNumberOfPickups = 0;
+    public List<GameObject> EnemiesList;
 
-   
     void Start()
     {
         InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
@@ -34,10 +35,12 @@ public class SpawnController : MonoBehaviour
         // instantiate (create) the pickup prefab with the above position and rotation
         spawnedPickup = Instantiate(pickupPrefab, randomPostion, transform.rotation);
         currentNumberOfPickups++;
-        //if (currentNumberOfPickups % 20 == 0)
-        //{
-        //    Instantiate(VirusPrefabs, randomPostion, transform.rotation);
-        //}
+        if (currentNumberOfPickups % 20 == 0)
+        {
+            spawnedPickup = Instantiate(VirusPrefabs, randomPostion, transform.rotation);
+            EnemiesList.Add(spawnedPickup);
+           // spawnedPickup.GetComponent<AI>().mass = Random.Range(25, 100);
+        }
         // change color
         ChangeColor(spawnedPickup);
 
