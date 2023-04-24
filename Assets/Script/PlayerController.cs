@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public int initMass;
@@ -209,6 +209,8 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 //Eat(CollidedObject);
                 Destroy(this.gameObject);
+                Time.timeScale = 0;
+                SceneManager.LoadScene(0);
             }
             else
             {

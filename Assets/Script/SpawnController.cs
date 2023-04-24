@@ -35,12 +35,12 @@ public class SpawnController : MonoBehaviour
         // instantiate (create) the pickup prefab with the above position and rotation
         spawnedPickup = Instantiate(pickupPrefab, randomPostion, transform.rotation);
         currentNumberOfPickups++;
-        if (currentNumberOfPickups % 20 == 0)
-        {
-           Instantiate(VirusPrefabs, randomPostion, transform.rotation);
+        //if (currentNumberOfPickups % 20 == 0)
+        //{
+        //   Instantiate(VirusPrefabs, randomPostion, transform.rotation);
            
-           // spawnedPickup.GetComponent<AI>().mass = Random.Range(25, 100);
-        }
+        //   // spawnedPickup.GetComponent<AI>().mass = Random.Range(25, 100);
+        //}
         // change color
         ChangeColor(spawnedPickup);
 

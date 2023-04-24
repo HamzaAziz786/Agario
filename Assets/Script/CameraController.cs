@@ -47,7 +47,16 @@ public class CameraController : MonoBehaviour {
     // but it is guaranteed to run after all items have been processed
 	void LateUpdate () {
 		//Debug.Log ("mass: " + mass);
-        transform.position = pointer.transform.position + offset;
+		try
+		{
+            transform.position = pointer.transform.position + offset;
+        }
+		catch (System.Exception)
+		{
+
+			throw;
+		}
+        
 		//Debug.Log ("transform.position.y: " + transform.position.y);
 	}
 }
