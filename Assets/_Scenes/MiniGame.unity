@@ -1005,9 +1005,9 @@ MonoBehaviour:
   pickupPrefab: {fileID: 397303484}
   VirusPrefabs: {fileID: 4143231259853945804, guid: 91e2d25ee81d62e4c9feb16de93d7d4b,
     type: 3}
-  spawnTime: 0.5
-  spawnDelay: 0.3
-  totalNumberOfPickups: 4000
+  spawnTime: 0.3
+  spawnDelay: 2
+  totalNumberOfPickups: 1500
   currentNumberOfPickups: 0
   EnemiesList: []
 --- !u!4 &358182159
@@ -1351,6 +1351,8 @@ MonoBehaviour:
   PlayerClones: []
   distanceFromCamera: 10
   movementSpeed: 0.8
+  isMove: 1
+  isCloneMore: 1
 --- !u!23 &629477216
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1711,7 +1713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.26379177, y: 0.45800003}
-  m_AnchoredPosition: {x: -2.1799316, y: -0.89115906}
+  m_AnchoredPosition: {x: -2.1799316, y: -0.8911743}
   m_SizeDelta: {x: -0.32000732, y: -1.4183006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1457790577

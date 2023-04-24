@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
     public bool isMove = true;
+    public bool isCloneMore=true;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -82,14 +83,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && isCloneMore==true)
         {
             GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-            a.GetComponent<PlayerController>().isMove = false;
-            a.tag = "PlayerShootingClone";
-            Rigidbody rigidclone = a.GetComponent<Rigidbody>();
-            rigidclone.AddForce(this.transform.position.x, this.transform.position.y, this.transform.position.z - 20*5);
+            a.transform.Translate(Vector3.forward * 20 * Time.deltaTime);
+            isCloneMore = false;
 
+            //a.GetComponent<PlayerController>().isMove = false;
+           
+            //Rigidbody rigidclone = a.GetComponent<Rigidbody>();
+            //rigidclone.AddForce(this.transform.position.x+10, this.transform.position.y, (this.transform.position.z + 20));
+            a.gameObject.tag = "PlayerShootingClone";
 
         }
         if (isSpace && mass >= splitLimit && IsSplit == true)
@@ -108,7 +112,7 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 1.5f /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 2 /** Time.deltaTime*/);
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
@@ -180,11 +184,11 @@ public class PlayerController : MonoBehaviour
 
             Eat();
         }
-        else if(collider.gameObject.tag== "PlayerShootingClone")
-        {
-            Destroy(collider.gameObject);
-            this.transform.localScale *= 2f;
-        }
+        //else if(collider.gameObject.tag== "PlayerShootingClone")
+        //{
+        //    Destroy(collider.gameObject);
+        //    this.transform.localScale *= 2f;
+        //}
         else if (collider.gameObject.CompareTag("Virus"))
         {
             if (mass >= splitLimit && IsSplit == true)
