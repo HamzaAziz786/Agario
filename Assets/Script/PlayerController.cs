@@ -86,14 +86,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && isCloneMore==true)
         {
             GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-            a.transform.Translate(Vector3.forward * 20 * Time.deltaTime);
+            a.transform.Translate(Vector3.forward * 100 * Time.deltaTime);
             isCloneMore = false;
 
-            //a.GetComponent<PlayerController>().isMove = false;
-           
+            a.GetComponent<PlayerController>().isMove = false;
+            a.gameObject.tag = "PlayerShootingClone";
+
             //Rigidbody rigidclone = a.GetComponent<Rigidbody>();
             //rigidclone.AddForce(this.transform.position.x+10, this.transform.position.y, (this.transform.position.z + 20));
-            a.gameObject.tag = "PlayerShootingClone";
 
         }
         if (isSpace && mass >= splitLimit && IsSplit == true)
