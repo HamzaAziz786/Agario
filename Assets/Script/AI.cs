@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+
 public class AI : MonoBehaviour
 {
     public static AI aiInstance;
     public NavMeshAgent aiController;
     public GameObject Player;
-    //public TMP_Text Scoretext;
-    //public TMP_Text Masstext;
+    public Text Scoretext;
+    public Text Masstext;
 
     public float xRange = 10f;
     public float yRange = 5f;
@@ -26,8 +28,8 @@ public class AI : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
-        //Masstext.text = "Mass : " +mass.ToString();
-        //Scoretext.text = "Score : " + score.ToString();
+        Masstext.text = "Enemy Mass : " +mass.ToString();
+        Scoretext.text = "Enemy Score : " + score.ToString();
         tmpposition = this.transform.position;
         InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
     }
@@ -79,8 +81,8 @@ public class AI : MonoBehaviour
 
             mass += 1;
             score += 1;
-            //Masstext.text = "Mass : " + mass.ToString();
-            //Scoretext.text = "Score : " + score.ToString();
+            Masstext.text = "Enemy Mass : " + mass.ToString();
+            Scoretext.text = "Enemy Score : " + score.ToString();
 
             this.transform.localScale = new Vector3(
                 this.transform.localScale.x + .1f,

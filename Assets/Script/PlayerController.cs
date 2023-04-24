@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     //for spliting
     public GameObject splittedPickup;
     public GameObject tempplayerclone;
-    private const float splitingSpeed = .2f; //  A const variable is one whose value cannot be changed.
+    private const float splitingSpeed = 1f; //  A const variable is one whose value cannot be changed.
     private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
     private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     public bool eatableStart;
     public bool eatable;
-    private float eatableTime = 1f; // *should be 30sec
+    private float eatableTime = 200f; // *should be 30sec
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
         else if (splittedPickup != null)
         {
             Destroy(splittedPickup);
-            splittedPickup = (GameObject)Instantiate(this.gameObject, transform.localPosition, transform.rotation);
+            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(0).transform.position, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
 
             splittedPickup.gameObject.tag = "User";
