@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
+    public bool isMove = true;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -81,22 +82,35 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
+        if (Input.GetKey(KeyCode.W))
+        {
+            GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
+            a.GetComponent<PlayerController>().isMove = false;
+            a.tag = "PlayerShootingClone";
+            Rigidbody rigidclone = a.GetComponent<Rigidbody>();
+            rigidclone.AddForce(this.transform.position.x, this.transform.position.y, this.transform.position.z - 20*5);
 
+
+        }
         if (isSpace && mass >= splitLimit && IsSplit == true)
         {
             IsSplit = false;
 
             Split();
-           
+
             StartCoroutine(nameof(ResplitEnable));
         }
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = distanceFromCamera;
+        if (isMove == true)
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = distanceFromCamera;
 
-        Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        targetPosition.y = transform.position.y;
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            targetPosition.y = transform.position.y;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed/3 /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 1.5f /** Time.deltaTime*/);
+
+        }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
         //	transform.LookAt (followingTarget.position);
         //	transform.Translate (0.0f, 0.0f, followingSpeed * Time.deltaTime);
@@ -121,17 +135,17 @@ public class PlayerController : MonoBehaviour
             // if gameObject is in the queue, make it ineatable and get it move with splitting speed
             foreach (GameObject g in queue)
             {
-               if((g.transform.position - this.transform.position).magnitude > boundary)
+                if ((g.transform.position - this.transform.position).magnitude > boundary)
                 {
                     Vector3 mousePosition = Input.mousePosition;
                     mousePosition.z = distanceFromCamera;
 
                     Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
                     targetPosition.y = transform.position.y;
-                    
-                    g.transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed/3 /** Time.deltaTime*/);
+
+                    g.transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 2.2f /** Time.deltaTime*/);
                 }
-                
+
                 //if ((g.transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
                 //	g.transform.LookAt (followingTarget.position);
                 //	g.transform.Translate (0.0f, 0.0f, splitingSpeed * Time.deltaTime);
@@ -166,6 +180,11 @@ public class PlayerController : MonoBehaviour
 
             Eat();
         }
+        else if(collider.gameObject.tag== "PlayerShootingClone")
+        {
+            Destroy(collider.gameObject);
+            this.transform.localScale *= 2f;
+        }
         else if (collider.gameObject.CompareTag("Virus"))
         {
             if (mass >= splitLimit && IsSplit == true)
@@ -190,7 +209,7 @@ public class PlayerController : MonoBehaviour
                 massControllerInstance.DecreaseMass(userMass);
                 Destroy(collider.gameObject);
             }
-
+            EjectMass();
             // run SpawnPickup() for spawning again
             spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
                 spawnControllerInstance.spawnDelay);
@@ -325,7 +344,7 @@ public class PlayerController : MonoBehaviour
         // and instantiate(create) the pickup prefab with the above position and rotation
         if (splittedPickup == null)
         {
-            
+
             splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(0).transform.position, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
 
@@ -341,18 +360,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    	// Eject mass of mine
-    	void EjectMass()
-    	{
-    		tempScale = transform.localScale;
-    		tempScale.Set(tempScale.x - 3f, tempScale.y - 3f, tempScale.z - 3f);
-    		transform.localScale = tempScale;
-    
-    		// prevent getting higher too much when it is being smaller
-    		tempPosition = transform.localPosition;
-    		tempPosition.y -= 1f;
-    		transform.localPosition = tempPosition;
-    	}
+    // Eject mass of mine
+    void EjectMass()
+    {
+        tempScale = transform.localScale;
+        tempScale.Set(tempScale.x - 3f, tempScale.y - 3f, tempScale.z - 3f);
+        transform.localScale = tempScale;
+
+        // prevent getting higher too much when it is being smaller
+        tempPosition = transform.localPosition;
+        tempPosition.y -= 1f;
+        transform.localPosition = tempPosition;
+    }
 
     IEnumerator DequeueAllAfterWait(float time)
     {
