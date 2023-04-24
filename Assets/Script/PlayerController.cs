@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public GameObject splittedPickup;
     public GameObject tempplayerclone;
     private const float splitingSpeed = 1f; //  A const variable is one whose value cannot be changed.
-    private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
+    private const float growingSize = 0.05f; // Mass : Scale = 5 : 1
     private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
     //public Transform followingTarget;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     public bool eatableStart;
     public bool eatable;
-    private float eatableTime = 200f; // *should be 30sec
+    private float eatableTime = 4500f; // *should be 30sec
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public List<GameObject> PlayerClones;
 
     public float distanceFromCamera = 10f;
-    public float movementSpeed = .3f;
+    public float movementSpeed = .2f;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         targetPosition.y = transform.position.y;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed /** Time.deltaTime*/);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
         //	transform.LookAt (followingTarget.position);
         //	transform.Translate (0.0f, 0.0f, followingSpeed * Time.deltaTime);
@@ -341,18 +341,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //	// Eject mass of mine
-    //	void EjectMass()
-    //	{
-    //		tempScale = transform.localScale;
-    //		tempScale.Set(tempScale.x - 3f, tempScale.y - 3f, tempScale.z - 3f);
-    //		transform.localScale = tempScale;
-    //
-    //		// prevent getting higher too much when it is being smaller
-    //		tempPosition = transform.localPosition;
-    //		tempPosition.y -= 1f;
-    //		transform.localPosition = tempPosition;
-    //	}
+    // Eject mass of mine
+    void EjectMass()
+    {
+        tempScale = transform.localScale;
+        tempScale.Set(tempScale.x - 3f, tempScale.y - 3f, tempScale.z - 3f);
+        transform.localScale = tempScale;
+
+        // prevent getting higher too much when it is being smaller
+        tempPosition = transform.localPosition;
+        tempPosition.y -= 1f;
+        transform.localPosition = tempPosition;
+    }
 
     IEnumerator DequeueAllAfterWait(float time)
     {

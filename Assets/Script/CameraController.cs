@@ -31,10 +31,10 @@ public class CameraController : MonoBehaviour {
 		totalMass = (float)massControllerInstance.totalMass;
 
 		// camera get higher when you eat 5 pickups
-		if(totalMass > prevTotalMass + 4 && totalMass < 60)
+		if(totalMass > prevTotalMass /*+ 4*/ /*&& totalMass < 60*/)
 		{
 			Debug.Log ("Camera higher");
-			offset.y = offset.y + (totalMass * 0.1f);
+			offset.y = offset.y + .1f; /*+ (totalMass * 0.1f);*/
 			prevTotalMass = totalMass;
 		}
         if (pointer == null)
