@@ -20,7 +20,7 @@ public class AI : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
-       // InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
+        InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
     }
     void Update()
     {
@@ -53,19 +53,20 @@ public class AI : MonoBehaviour
             }
             else if(mass > userMass)
             {
-                Destroy(other.gameObject);
-
+               // Destroy(other.gameObject);
+                Time.timeScale = 0;
             }
 
 
 
         }
-       //else if (other.gameObject.CompareTag("Pickup"))
-       // {
-           
-       //     Destroy(other.gameObject);
-       //     Eat();
-       // }
+       else if (other.gameObject.CompareTag("Pickup"))
+       {
+            this.transform.localScale *= .2f;
+            mass = mass+ 1;
+           //Destroy(other.gameObject);
+            //Eat();
+        }
     }
     void Eat()
     {

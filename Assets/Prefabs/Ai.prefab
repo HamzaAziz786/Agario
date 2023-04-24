@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4143231259853945797}
   m_Layer: 0
   m_Name: Ai
-  m_TagString: OriginalPlayer
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   yRange: 5
   zRange: 10
   moveInterval: 2
-  mass: 50
+  mass: 20
 --- !u!195 &4143231259853945797
 NavMeshAgent:
   m_ObjectHideFlags: 0

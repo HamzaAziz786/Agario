@@ -37,8 +37,8 @@ public class SpawnController : MonoBehaviour
         currentNumberOfPickups++;
         if (currentNumberOfPickups % 20 == 0)
         {
-            spawnedPickup = Instantiate(VirusPrefabs, randomPostion, transform.rotation);
-            EnemiesList.Add(spawnedPickup);
+           Instantiate(VirusPrefabs, randomPostion, transform.rotation);
+           
            // spawnedPickup.GetComponent<AI>().mass = Random.Range(25, 100);
         }
         // change color

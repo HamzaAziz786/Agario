@@ -9,6 +9,7 @@ TagManager:
   - User
   - OriginalPlayer
   - Virus
+  - AI
   layers:
   - Default
   - TransparentFX
