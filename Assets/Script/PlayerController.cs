@@ -29,11 +29,11 @@ public class PlayerController : MonoBehaviour
     public GameObject splittedPickup;
     public GameObject tempplayerclone;
     private const float splitingSpeed = 1f; //  A const variable is one whose value cannot be changed.
-    private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
+    private const float growingSize = 0.05f; // Mass : Scale = 5 : 1
     private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
     //public Transform followingTarget;
-    private float followingSpeed = .2f;
+    private float followingSpeed = .09f;
     private float boundary; // boundary for preventing to overlap
 
     public bool eatableStart;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         targetPosition.y = transform.position.y;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed /** Time.deltaTime*/);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed/3 /** Time.deltaTime*/);
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
         //	transform.LookAt (followingTarget.position);
         //	transform.Translate (0.0f, 0.0f, followingSpeed * Time.deltaTime);
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
                     targetPosition.y = transform.position.y;
                     
-                    g.transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+                    g.transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed/3 /** Time.deltaTime*/);
                 }
                 
                 //if ((g.transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
