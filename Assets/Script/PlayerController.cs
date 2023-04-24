@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     //for spliting
     public GameObject splittedPickup;
+    public GameObject tempplayerclone;
     private const float splitingSpeed = .2f; //  A const variable is one whose value cannot be changed.
     private const float growingSize = 0.2f; // Mass : Scale = 5 : 1
     private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
@@ -41,8 +42,8 @@ public class PlayerController : MonoBehaviour
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
-
-
+    public List<GameObject> playerClonePositions;
+    public List<GameObject> PlayerClones;
 
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
         SetTotalScoreText();
         SetMassText();
 
-        boundary = transform.localScale.x * 80f;
+        boundary = transform.localScale.x * 750f;
 
         eatable = false;
         eatableStart = false;
@@ -165,6 +166,17 @@ public class PlayerController : MonoBehaviour
 
             Eat();
         }
+        else if (collider.gameObject.CompareTag("Virus"))
+        {
+            if (mass >= splitLimit && IsSplit == true)
+            {
+                IsSplit = false;
+
+                Split();
+
+                StartCoroutine(nameof(ResplitEnable));
+            }
+        }
         // when player hit User
         else if (collider.gameObject.CompareTag("User") && eatable)
         {
@@ -223,7 +235,14 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    IEnumerator ResetVirusPlayerClone()
+    {
+        yield return new WaitForSeconds(4f);
+        for (int i = 0; i < playerClonePositions.Count; i++)
+        {
+            Destroy(this.transform.GetChild(i));
+        }
+    }
     void SetTotalScoreText()
     {
         totalScoreText.text = "Score: " + totalScore.ToString();
