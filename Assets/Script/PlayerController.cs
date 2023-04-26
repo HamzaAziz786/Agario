@@ -184,11 +184,11 @@ public class PlayerController : MonoBehaviour
 
             Eat();
         }
-        //else if(collider.gameObject.tag== "PlayerShootingClone")
-        //{
-        //    Destroy(collider.gameObject);
-        //    this.transform.localScale *= 2f;
-        //}
+        else if (collider.gameObject.tag == "PlayerShootingClone")
+        {
+            Destroy(collider.gameObject);
+            this.transform.localScale *= 2f;
+        }
         else if (collider.gameObject.CompareTag("Virus"))
         {
             if (mass >= splitLimit && IsSplit == true)
@@ -213,7 +213,10 @@ public class PlayerController : MonoBehaviour
                 massControllerInstance.DecreaseMass(userMass);
                 Destroy(collider.gameObject);
             }
-            EjectMass();
+            tempScale = transform.localScale;
+            tempScale.Set(tempScale.x * 2, tempScale.y * 2, tempScale.z * 2);
+            transform.localScale = tempScale;
+            // EjectMass();
             // run SpawnPickup() for spawning again
             spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
                 spawnControllerInstance.spawnDelay);

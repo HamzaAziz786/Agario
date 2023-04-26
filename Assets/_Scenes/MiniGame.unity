@@ -1006,8 +1006,8 @@ MonoBehaviour:
   VirusPrefabs: {fileID: 4143231259853945804, guid: 91e2d25ee81d62e4c9feb16de93d7d4b,
     type: 3}
   spawnTime: 0.3
-  spawnDelay: 2
-  totalNumberOfPickups: 1500
+  spawnDelay: 0.8
+  totalNumberOfPickups: 4000
   currentNumberOfPickups: 0
   EnemiesList: []
 --- !u!4 &358182159
