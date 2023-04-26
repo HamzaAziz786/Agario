@@ -35,12 +35,12 @@ public class PlayerController : MonoBehaviour
     private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
 
     //public Transform followingTarget;
-    private float followingSpeed = .09f;
+    private float followingSpeed = .05f;
     private float boundary; // boundary for preventing to overlap
 
     public bool eatableStart;
     public bool eatable;
-    private float eatableTime = 5000f; // *should be 30sec
+    private float eatableTime = 10000f; // *should be 30sec
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour
     // and it is called before rendering a frame
     void Update()
     {
-        bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (Input.GetKey(KeyCode.W) /*&& isCloneMore==true*/)
+        
+        if (Input.GetKey(KeyCode.W) && isCloneMore == true)
         {
             if (transform.localScale.x >= 1)
             {
@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
             //rigidclone.AddForce(this.transform.position.x+10, this.transform.position.y, (this.transform.position.z + 20));
 
         }
+        bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
         if (isSpace && mass >= splitLimit && IsSplit == true)
         {
             IsSplit = false;
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 2 /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 3 /** Time.deltaTime*/);
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
@@ -193,7 +194,14 @@ public class PlayerController : MonoBehaviour
         else if (collider.gameObject.tag == "PlayerShootingClone")
         {
             Destroy(collider.gameObject);
-            this.transform.localScale *= 2f;
+            tempScale = transform.localScale;
+            float biggerScaleX = tempScale.x + growingSize;
+            float biggerScaleY = tempScale.y + growingSize;
+            float biggerScaleZ = tempScale.z + growingSize;
+
+            tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
+            transform.localScale = tempScale;
+            isCloneMore = true;
         }
         else if (collider.gameObject.CompareTag("Virus"))
         {
@@ -220,7 +228,11 @@ public class PlayerController : MonoBehaviour
                 Destroy(collider.gameObject);
             }
             tempScale = transform.localScale;
-            tempScale.Set(tempScale.x * 2, tempScale.y * 2, tempScale.z * 2);
+            float biggerScaleX = tempScale.x + growingSize+1;
+            float biggerScaleY = tempScale.y + growingSize + 1;
+            float biggerScaleZ = tempScale.z + growingSize + 1;
+
+            tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
             transform.localScale = tempScale;
             // EjectMass();
             // run SpawnPickup() for spawning again
