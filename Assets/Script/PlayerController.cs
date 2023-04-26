@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
 public class PlayerController : MonoBehaviour
 {
     public int initMass;
@@ -83,14 +85,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (Input.GetKey(KeyCode.W) && isCloneMore==true)
+        if (Input.GetKey(KeyCode.W) /*&& isCloneMore==true*/)
         {
-            GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-            a.transform.Translate(Vector3.forward * 100 * Time.deltaTime);
-            isCloneMore = false;
+            if (transform.localScale.x >= 1)
+            {
+                GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
+                a.transform.Translate(Vector3.forward * 100 * Time.deltaTime);
+                isCloneMore = false;
 
-            a.GetComponent<PlayerController>().isMove = false;
-            a.gameObject.tag = "PlayerShootingClone";
+                a.GetComponent<PlayerController>().isMove = false;
+                a.gameObject.tag = "PlayerShootingClone";
+            }
+           
 
             //Rigidbody rigidclone = a.GetComponent<Rigidbody>();
             //rigidclone.AddForce(this.transform.position.x+10, this.transform.position.y, (this.transform.position.z + 20));
