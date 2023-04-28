@@ -1,46 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 // https://answers.unity.com/questions/537688/how-to-randomly-generate-pickups.html
 
 public class SpawnController : MonoBehaviour
 {
     //the pickup prefab assigned via the Inspector
     public GameObject pickupPrefab;
-    public GameObject VirusPrefabs;
+    public GameObject Ai;
     private GameObject spawnedPickup;
-    
+    public GameObject ParentAI;
 
     public float spawnTime;
     public float spawnDelay;
-  
+
     private int mapsizeX = 500;
     private int mapsizeZ = 500;
 
     public int totalNumberOfPickups;
     public int currentNumberOfPickups = 0;
     public List<GameObject> EnemiesList;
+    int countenemies = 0;
+    public List<Text> ScoreText;
+    public List<Text> MassText;
 
     void Start()
     {
         InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
     }
 
-   public  void SpawnPickup()
+    public void SpawnPickup()
     {
         Vector3 randomPostion = GenerateRandomPosition();
 
         // instantiate (create) the pickup prefab with the above position and rotation
         spawnedPickup = Instantiate(pickupPrefab, randomPostion, transform.rotation);
         currentNumberOfPickups++;
-        //if (currentNumberOfPickups % 20 == 0)
-        //{
-        //   Instantiate(VirusPrefabs, randomPostion, transform.rotation);
-           
-        //   // spawnedPickup.GetComponent<AI>().mass = Random.Range(25, 100);
-        //}
+        if (currentNumberOfPickups % 20 == 0 && EnemiesList.Count<20)
+        {
+            Ai = Instantiate(Ai, randomPostion, transform.rotation,ParentAI.transform);
+
+            Ai.GetComponent<AI>().mass = Random.Range(25, 100);
+            EnemiesList.Add(Ai);
+            MassText[countenemies].text =  EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
+            ScoreText[countenemies].text =  EnemiesList[countenemies].GetComponent<AI>().score.ToString();
+            countenemies++;
+            if (countenemies > 9)
+                countenemies = 0;
+        }
         // change color
         ChangeColor(spawnedPickup);
 
@@ -48,12 +58,12 @@ public class SpawnController : MonoBehaviour
         spawnedPickup.name = randomPostion.x.ToString() + '.' + randomPostion.y.ToString()
             + '.' + randomPostion.z.ToString();
 
-        if(currentNumberOfPickups >= totalNumberOfPickups)
+        if (currentNumberOfPickups >= totalNumberOfPickups)
         {
             CancelInvoke("SpawnPickup");
             //Debug.Log("CancelInvoke: " + currentNumberOfPickups + ", " +  totalNumberOfPickups);
         }
-        if(currentNumberOfPickups < totalNumberOfPickups)
+        if (currentNumberOfPickups < totalNumberOfPickups)
         {
             InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
             //Debug.Log("InvokeRepeating: " + currentNumberOfPickups + ", " + totalNumberOfPickups);
@@ -76,7 +86,7 @@ public class SpawnController : MonoBehaviour
 
     public void ChangeColor(GameObject target)
     {
-        Color RandomColor = Color.HSVToRGB(Random.Range(0f, 1f), 
+        Color RandomColor = Color.HSVToRGB(Random.Range(0f, 1f),
             Random.Range(0f, 1f), Random.Range(0f, 1f));
         target.GetComponent<Renderer>()
             .material.color = RandomColor;
