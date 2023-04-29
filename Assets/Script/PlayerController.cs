@@ -264,10 +264,10 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 //Eat(CollidedObject);
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
                 
                 SceneManager.LoadScene(0);
-                Time.timeScale = 1;
+                //Time.timeScale = 1;
             }
             else
             {
