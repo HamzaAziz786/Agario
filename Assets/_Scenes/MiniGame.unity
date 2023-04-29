@@ -1498,11 +1498,13 @@ MonoBehaviour:
   eatable: 0
   IsSplit: 1
   playerClonePositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 291452596}
+  - {fileID: 195459470}
+  - {fileID: 2096264126}
+  - {fileID: 1849059623}
+  - {fileID: 509659353}
+  - {fileID: 1276601992}
+  - {fileID: 1667113230}
   PlayerClones: []
   distanceFromCamera: 10
   movementSpeed: 0.8

@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject tempplayerclone;
     private const float splitingSpeed = 1f; //  A const variable is one whose value cannot be changed.
     private const float growingSize = 0.05f; // Mass : Scale = 5 : 1
-    private const int splitLimit = 0; // *should be double of init mass // minimum splitable mass
+    private const int splitLimit = 6; // *should be double of init mass // minimum splitable mass
 
     //public Transform followingTarget;
     private float followingSpeed = .05f;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
     public bool isMove = true;
-    public bool isCloneMore=true;
+    public bool isCloneMore = true;
     int indexplayerchild = 0;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
     // and it is called before rendering a frame
     void Update()
     {
-        
+
         if (Input.GetKey(KeyCode.W) /*&& isCloneMore == true*/)
         {
             if (transform.localScale.x >= 1)
@@ -97,14 +97,14 @@ public class PlayerController : MonoBehaviour
                 a.GetComponent<PlayerController>().isMove = false;
                 a.gameObject.tag = "PlayerShootingClone";
             }
-           
+
 
             //Rigidbody rigidclone = a.GetComponent<Rigidbody>();
             //rigidclone.AddForce(this.transform.position.x+10, this.transform.position.y, (this.transform.position.z + 20));
 
         }
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (isSpace && mass >= splitLimit  && transform.localScale.x >= 1 /*&& IsSplit == true*/)
+        if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 /*&& IsSplit == true*/)
         {
             IsSplit = false;
 
@@ -195,6 +195,7 @@ public class PlayerController : MonoBehaviour
         else if (collider.gameObject.tag == "PlayerShootingClone")
         {
             Destroy(collider.gameObject);
+       
             tempScale = transform.localScale;
             float biggerScaleX = tempScale.x + growingSize;
             float biggerScaleY = tempScale.y + growingSize;
@@ -202,6 +203,7 @@ public class PlayerController : MonoBehaviour
 
             tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
             transform.localScale = tempScale;
+            this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z) ;
             isCloneMore = true;
         }
         else if (collider.gameObject.CompareTag("Virus"))
@@ -216,26 +218,23 @@ public class PlayerController : MonoBehaviour
             }
         }
         // when player hit User
-        else if (collider.gameObject.CompareTag("User") && eatable)
+        else if (collider.gameObject.CompareTag("User") /*&& eatable*/)
         {
             PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
             int userMass = CollidedObjectPlayerController.GetMass();
-
-            if (mass > userMass)
-            {
-                //Debug.Log ("mass > userMass: " + mass + " > " + userMass);
-                Eat(CollidedObject);
-                massControllerInstance.DecreaseMass(userMass);
-                Destroy(collider.gameObject);
-            }
             tempScale = transform.localScale;
-            float biggerScaleX = tempScale.x + growingSize+3;
-            float biggerScaleY = tempScale.y + growingSize + 3;
-            float biggerScaleZ = tempScale.z + growingSize + 3;
+            float biggerScaleX = tempScale.x + userMass * growingSize;
+            float biggerScaleY = tempScale.y + userMass * growingSize;
+            float biggerScaleZ = tempScale.z + userMass * growingSize;
 
             tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
             transform.localScale = tempScale;
-            // EjectMass();
+
+            Eat(CollidedObject);
+
+            Destroy(collider.gameObject);
+
+
             // run SpawnPickup() for spawning again
             spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
                 spawnControllerInstance.spawnDelay);
@@ -266,8 +265,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 //Eat(CollidedObject);
                 Destroy(this.gameObject);
-                //Time.timeScale = 0;
+                
                 SceneManager.LoadScene(0);
+                Time.timeScale = 1;
             }
             else
             {
@@ -360,6 +360,20 @@ public class PlayerController : MonoBehaviour
         // prevent getting higher too much when it is being smaller
         tempPosition = transform.localPosition;
         tempPosition.y = tempScale.y / 2;
+        transform.localPosition = tempPosition;
+    }
+    void MakeDoubleSize()
+    {
+        mass = mass * 2;
+        SetMassText();
+
+        tempScale = transform.localScale;
+        tempScale.Set(tempScale.x * 2, tempScale.y * 2, tempScale.z * 2);
+        transform.localScale = tempScale;
+
+        // prevent getting higher too much when it is being smaller
+        tempPosition = transform.localPosition;
+        tempPosition.y = tempScale.y * 2;
         transform.localPosition = tempPosition;
     }
 
