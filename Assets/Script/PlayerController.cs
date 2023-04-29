@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = .3f;
     public bool isMove = true;
     public bool isCloneMore=true;
+    int indexplayerchild = 0;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKey(KeyCode.W) && isCloneMore == true)
+        if (Input.GetKey(KeyCode.W) /*&& isCloneMore == true*/)
         {
             if (transform.localScale.x >= 1)
             {
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
         }
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (isSpace && mass >= splitLimit && IsSplit == true)
+        if (isSpace && mass >= splitLimit  && transform.localScale.x >= 1 /*&& IsSplit == true*/)
         {
             IsSplit = false;
 
@@ -228,9 +229,9 @@ public class PlayerController : MonoBehaviour
                 Destroy(collider.gameObject);
             }
             tempScale = transform.localScale;
-            float biggerScaleX = tempScale.x + growingSize+1;
-            float biggerScaleY = tempScale.y + growingSize + 1;
-            float biggerScaleZ = tempScale.z + growingSize + 1;
+            float biggerScaleX = tempScale.x + growingSize+3;
+            float biggerScaleY = tempScale.y + growingSize + 3;
+            float biggerScaleZ = tempScale.z + growingSize + 3;
 
             tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
             transform.localScale = tempScale;
@@ -265,7 +266,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 //Eat(CollidedObject);
                 Destroy(this.gameObject);
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 SceneManager.LoadScene(0);
             }
             else
@@ -370,17 +371,25 @@ public class PlayerController : MonoBehaviour
         if (splittedPickup == null)
         {
 
-            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(0).transform.position, transform.rotation);
+            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(indexplayerchild).transform.position, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
-
+            indexplayerchild++;
+            if (indexplayerchild > 6)
+            {
+                indexplayerchild = 0;
+            }
             splittedPickup.gameObject.tag = "User";
         }
         else if (splittedPickup != null)
         {
             Destroy(splittedPickup);
-            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(0).transform.position, transform.rotation);
+            splittedPickup = (GameObject)Instantiate(this.gameObject, this.transform.GetChild(indexplayerchild).transform.position, transform.rotation);
             Faster(splittedPickup); // make splitted one faster in short time
-
+            indexplayerchild++;
+            if (indexplayerchild > 6)
+            {
+                indexplayerchild = 0;
+            }
             splittedPickup.gameObject.tag = "User";
         }
     }
@@ -389,7 +398,7 @@ public class PlayerController : MonoBehaviour
     void EjectMass()
     {
         tempScale = transform.localScale;
-        tempScale.Set(tempScale.x - 3f, tempScale.y - 3f, tempScale.z - 3f);
+        tempScale.Set(tempScale.x - 1f, tempScale.y - 1f, tempScale.z - 1f);
         transform.localScale = tempScale;
 
         // prevent getting higher too much when it is being smaller

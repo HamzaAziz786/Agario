@@ -27,7 +27,16 @@ public class AI : MonoBehaviour
     }
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
+        try
+        {
+            Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+        
         //Masstext.text = "Enemy Mass : " +mass.ToString();
         //Scoretext.text = "Enemy Score : " + score.ToString();
         tmpposition = this.transform.position;
@@ -36,11 +45,11 @@ public class AI : MonoBehaviour
     void Update()
     {
         float dist = Vector3.Distance(aiController.transform.position, Player.transform.position);
-        if ( dist < 70)
+        if ( dist < 90)
         {
             aiController.SetDestination(Player.transform.position);
         }
-        else
+        else if(dist > 95)
         {
             aiController.SetDestination(tmpposition);
         }
@@ -49,9 +58,9 @@ public class AI : MonoBehaviour
     void MoveToRandomPosition()
     {
         // generate new random positions within the range
-        float randomX = Random.Range(-xRange, xRange);
-        float randomY = Random.Range(-yRange, yRange);
-        float randomZ = Random.Range(-zRange, zRange);
+        float randomX = Random.Range(this.transform.position.x-xRange, this.transform.position.x + xRange);
+        float randomY = Random.Range(this.transform.position.y - yRange, this.transform.position.y+yRange);
+        float randomZ = Random.Range(this.transform.position.z - zRange, this.transform.position.z+zRange);
 
         // move the object to the new random position
         transform.position = new Vector3(randomX, randomY, randomZ) ;
