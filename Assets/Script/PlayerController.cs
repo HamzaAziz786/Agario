@@ -35,12 +35,12 @@ public class PlayerController : MonoBehaviour
     private const int splitLimit = 6; // *should be double of init mass // minimum splitable mass
 
     //public Transform followingTarget;
-    private float followingSpeed = .05f;
+    private float followingSpeed = .02f;
     private float boundary; // boundary for preventing to overlap
 
     public bool eatableStart;
     public bool eatable;
-    private float eatableTime = 10000f; // *should be 30sec
+    private float eatableTime = 20000f; // *should be 30sec
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
-    public bool isMove = false;
+    public bool isMove = true;
     public bool isCloneMore = true;
     int indexplayerchild = 0;
     // Use this for initialization
@@ -79,26 +79,21 @@ public class PlayerController : MonoBehaviour
         eatableStart = false;
 
         prevMass = mass;
-        StartCoroutine(nameof(EnablePlayerToMove));
     }
-    IEnumerator EnablePlayerToMove()
-    {
-        yield return new WaitForSeconds(.5f);
-        isMove = true;
-        LoadingPanel.SetActive(false);
-    }
+   
     // Update() is called once per frame
     // and it is called before rendering a frame
     void Update()
     {
 
-        if (Input.GetKey(KeyCode.W) /*&& isCloneMore == true*/)
+        if (Input.GetKey(KeyCode.W) && isCloneMore == true)
         {
             if (transform.localScale.x >= 1)
             {
+                isCloneMore = false;
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
                 a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
-                isCloneMore = false;
+                
 
                 a.GetComponent<PlayerController>().isMove = false;
                 a.gameObject.tag = "PlayerShootingClone";
@@ -126,7 +121,7 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 3 /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 4 /** Time.deltaTime*/);
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
