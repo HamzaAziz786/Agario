@@ -38,7 +38,7 @@ public class SpawnController : MonoBehaviour
         
         InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
     }
-
+    
     public void SpawnPickup()
     {
         Vector3 randomPostion = GenerateRandomPosition();
@@ -53,6 +53,7 @@ public class SpawnController : MonoBehaviour
             Ai.GetComponent<AI>().mass = Random.Range(25, 100);
             Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
             EnemiesList.Add(Ai);
+          
             MassText[countenemies].text = "Mass :"+EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
             ScoreText[countenemies].text = "Score :" + EnemiesList[countenemies].GetComponent<AI>().score.ToString();
             countenemies++;
@@ -76,6 +77,8 @@ public class SpawnController : MonoBehaviour
             InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
             //Debug.Log("InvokeRepeating: " + currentNumberOfPickups + ", " + totalNumberOfPickups);
         }
+       
+
     }
 
     Vector3 GenerateRandomPosition()

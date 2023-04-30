@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         prevMass = mass;
     }
-   
+
     // Update() is called once per frame
     // and it is called before rendering a frame
     void Update()
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 isCloneMore = false;
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
                 a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
-                
+
 
                 a.GetComponent<PlayerController>().isMove = false;
                 a.gameObject.tag = "PlayerShootingClone";
@@ -181,6 +183,15 @@ public class PlayerController : MonoBehaviour
         // destroy collided object, respawn, eat when player hit Pickup
         if (collider.gameObject.CompareTag("Pickup"))
         {
+            for (int i = 0; i < SpawnController.instance.EnemiesList.Count; i++)
+            {
+                
+                var sortedScores = SpawnController.instance.EnemiesList[i].GetComponent<AI>().score.ToString().OrderByDescending(score => score);
+                SpawnController.instance.ScoreText[i].text = "Score :" + SpawnController.instance.EnemiesList[i].GetComponent<AI>().score.ToString();
+            }
+           
+
+          
             totalScore = totalScore + 1;
             SetTotalScoreText();
 
@@ -196,7 +207,7 @@ public class PlayerController : MonoBehaviour
         else if (collider.gameObject.tag == "PlayerShootingClone")
         {
             Destroy(collider.gameObject);
-       
+
             tempScale = transform.localScale;
             float biggerScaleX = tempScale.x + growingSize;
             float biggerScaleY = tempScale.y + growingSize;
@@ -204,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
             tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
             transform.localScale = tempScale;
-            this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z) ;
+            this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
             isCloneMore = true;
         }
         else if (collider.gameObject.CompareTag("Virus"))
@@ -266,7 +277,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("mass > userMass: " + mass + " > " + userMass);
                 //Eat(CollidedObject);
                 //Destroy(this.gameObject);
-                
+
                 SceneManager.LoadScene(0);
                 //Time.timeScale = 1;
             }
