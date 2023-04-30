@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class SpawnController : MonoBehaviour
 {
     //the pickup prefab assigned via the Inspector
+    public static SpawnController instance;
     public GameObject pickupPrefab;
     public GameObject Ai;
     private GameObject spawnedPickup;
@@ -29,6 +30,12 @@ public class SpawnController : MonoBehaviour
 
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+            Debug.Log(instance);
+        }
+        
         InvokeRepeating("SpawnPickup", spawnTime, spawnDelay);
     }
 
@@ -39,14 +46,15 @@ public class SpawnController : MonoBehaviour
         // instantiate (create) the pickup prefab with the above position and rotation
         spawnedPickup = Instantiate(pickupPrefab, randomPostion, transform.rotation);
         currentNumberOfPickups++;
-        if (currentNumberOfPickups % 20 == 0 && EnemiesList.Count<20)
+        if (currentNumberOfPickups % 20 == 0 && EnemiesList.Count<10)
         {
             Ai = Instantiate(Ai, randomPostion, transform.rotation,ParentAI.transform);
-
+            Ai.gameObject.name = countenemies.ToString();
             Ai.GetComponent<AI>().mass = Random.Range(25, 100);
+            Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
             EnemiesList.Add(Ai);
-            MassText[countenemies].text =  EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
-            ScoreText[countenemies].text =  EnemiesList[countenemies].GetComponent<AI>().score.ToString();
+            MassText[countenemies].text = "Mass :"+EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
+            ScoreText[countenemies].text = "Score :" + EnemiesList[countenemies].GetComponent<AI>().score.ToString();
             countenemies++;
             if (countenemies > 9)
                 countenemies = 0;

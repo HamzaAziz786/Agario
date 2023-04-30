@@ -12,7 +12,7 @@ public class AI : MonoBehaviour
     public GameObject Player;
     //public Text Scoretext;
     //public Text Masstext;
-
+    public int currrent_enemy_value;
     public float xRange = 10f;
     public float yRange = 5f;
     public float zRange = 10f;
@@ -90,6 +90,8 @@ public class AI : MonoBehaviour
 
             mass += 1;
             score += 1;
+            SpawnController.instance.ScoreText[currrent_enemy_value].text = "Score:"+score.ToString();
+            SpawnController.instance.MassText[currrent_enemy_value].text = "Mass:"+mass.ToString();
             //Masstext.text = "Enemy Mass : " + mass.ToString();
             //Scoretext.text = "Enemy Score : " + score.ToString();
 

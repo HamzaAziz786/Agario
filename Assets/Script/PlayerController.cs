@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private int totalScore;
     public Text totalScoreText;
     public Text massText;
-
+    public GameObject LoadingPanel;
     public GameObject mySpawner; // GameObejct instance for SpawnController
     private SpawnController spawnControllerInstance; // script instance of SpawnController for connecting SpawnController 
     private GameObject CollidedObject;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
-    public bool isMove = true;
+    public bool isMove = false;
     public bool isCloneMore = true;
     int indexplayerchild = 0;
     // Use this for initialization
@@ -79,8 +79,14 @@ public class PlayerController : MonoBehaviour
         eatableStart = false;
 
         prevMass = mass;
+        StartCoroutine(nameof(EnablePlayerToMove));
     }
-
+    IEnumerator EnablePlayerToMove()
+    {
+        yield return new WaitForSeconds(.5f);
+        isMove = true;
+        LoadingPanel.SetActive(false);
+    }
     // Update() is called once per frame
     // and it is called before rendering a frame
     void Update()
@@ -91,7 +97,7 @@ public class PlayerController : MonoBehaviour
             if (transform.localScale.x >= 1)
             {
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-                a.transform.Translate(Vector3.forward * 100 * Time.deltaTime);
+                a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
                 isCloneMore = false;
 
                 a.GetComponent<PlayerController>().isMove = false;
@@ -104,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         }
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 /*&& IsSplit == true*/)
+        if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 && IsSplit == true)
         {
             IsSplit = false;
 
