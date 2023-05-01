@@ -27,9 +27,10 @@ public class SpawnController : MonoBehaviour
     int countenemies = 0;
     public List<Text> ScoreText;
     public List<Text> MassText;
-
+    public List<int> ScoreList;
     void Start()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -59,6 +60,12 @@ public class SpawnController : MonoBehaviour
             countenemies++;
             if (countenemies > 9)
                 countenemies = 0;
+        }
+
+        for (int i = 0; i < EnemiesList.Count; i++)
+        {
+            ScoreList[i] = EnemiesList[i].GetComponent<AI>().score;
+            
         }
         // change color
         ChangeColor(spawnedPickup);

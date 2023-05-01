@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     public bool isMove = true;
     public bool isCloneMore = true;
     int indexplayerchild = 0;
+    public int[] scores;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -183,15 +184,24 @@ public class PlayerController : MonoBehaviour
         // destroy collided object, respawn, eat when player hit Pickup
         if (collider.gameObject.CompareTag("Pickup"))
         {
-            for (int i = 0; i < SpawnController.instance.EnemiesList.Count; i++)
-            {
-                
-                var sortedScores = SpawnController.instance.EnemiesList[i].GetComponent<AI>().score.ToString().OrderByDescending(score => score);
-                SpawnController.instance.ScoreText[i].text = "Score :" + SpawnController.instance.EnemiesList[i].GetComponent<AI>().score.ToString();
-            }
-           
 
-          
+            
+
+
+            scores[0] = SpawnController.instance.ScoreList[0];
+            int highestvalue = scores.OrderByDescending(score => score).Max();
+            SpawnController.instance.ScoreText[0].text = "Score :" + highestvalue.ToString();
+            //for (int i = 1; i < SpawnController.instance.EnemiesList.Count; i++)
+            //{
+            //    SpawnController.instance.ScoreList[i] = SpawnController.instance.EnemiesList[i].GetComponent<AI>().score;
+            //    Debug.Log("Score : " + SpawnController.instance.ScoreList[i]);
+            //}
+            //for (int i = 1; i < SpawnController.instance.EnemiesList.Count; i++)
+            //{
+            //    SpawnController.instance.ScoreText[i].text = "Score :" + SpawnController.instance.ScoreList[i].ToString();
+            //}
+
+
             totalScore = totalScore + 1;
             SetTotalScoreText();
 
