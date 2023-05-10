@@ -90,13 +90,13 @@ public class MenuManag : MonoBehaviour
 
     public void SubCharacterSelection(int SubCharacterNumber)
     {
-        subCharacterDetail[0].SelectedCharactername.text = "Character # " + SubCharacterNumber;
+        subCharacterDetail[0].SelectedCharactername.text = "Char # " + SubCharacterNumber;
         subCharacterDetail[0].SelectedTitle.text = subCharacterSelect[SubCharacterNumber].Title;
         subCharacterDetail[0].SelectedName.text = subCharacterSelect[SubCharacterNumber].Name;
         subCharacterDetail[0].Selecteddescription.text = subCharacterSelect[SubCharacterNumber].description;
         for (int i = 0; i < subCharacterDetail[0].SubCharactersubName.Count; i++)
         {
-            subCharacterDetail[0].SubCharactersubName[i].text = "Character # " + SubCharacterNumber;
+            subCharacterDetail[0].SubCharactersubName[i].text = "Char # " + SubCharacterNumber;
         }
         for (int i = 0; i < 5; i++)
         {
