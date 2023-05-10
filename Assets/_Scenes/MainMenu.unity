@@ -207,7 +207,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1567188}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1567187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5663,7 +5675,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 430316168}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &430316167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6962,7 +6986,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 555352797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &555352796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9396,7 +9432,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 734238846}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &734238846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11628,7 +11676,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 883795445}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &883795444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13605,7 +13665,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1069075947}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562470860}
+        m_TargetAssemblyTypeName: MenuManag, Assembly-CSharp
+        m_MethodName: SelectCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1069075946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19629,7 +19701,17 @@ MonoBehaviour:
     Name: Tear
     Stars: 1
     description: "There\u2019s something in my eye. "
-  CharacterImg: {fileID: 0}
+  selectedChrDetail:
+  - SelectedCharacterImage: {fileID: 228020324}
+    SelectedTitle: {fileID: 15880377}
+    SelectedName: {fileID: 672294373}
+    Selectedstars:
+    - {fileID: 2135856648}
+    - {fileID: 1668178481}
+    - {fileID: 449668147}
+    - {fileID: 1522816399}
+    - {fileID: 1396220606}
+    Selecteddescription: {fileID: 312655097}
 --- !u!1 &1572328033
 GameObject:
   m_ObjectHideFlags: 0
