@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     public bool eatableStart;
     public bool eatable;
-    private float eatableTime = 20000f; // *should be 30sec
+    private float eatableTime = 50000f; // *should be 30sec
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;

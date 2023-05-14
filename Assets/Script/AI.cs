@@ -40,19 +40,20 @@ public class AI : MonoBehaviour
         //Masstext.text = "Enemy Mass : " +mass.ToString();
         //Scoretext.text = "Enemy Score : " + score.ToString();
         tmpposition = this.transform.position;
-        InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
+        //InvokeRepeating("MoveToRandomPosition", 0f, moveInterval);
     }
     void Update()
     {
-        float dist = Vector3.Distance(aiController.transform.position, Player.transform.position);
-        if ( dist < 90)
-        {
-            aiController.SetDestination(Player.transform.position);
-        }
-        else if(dist > 95)
-        {
-            aiController.SetDestination(tmpposition);
-        }
+        aiController.SetDestination(Player.transform.position * Time.deltaTime);
+        //float dist = Vector3.Distance(aiController.transform.position, Player.transform.position);
+        //if ( dist < 90)
+        //{
+        //    aiController.SetDestination(Player.transform.position);
+        //}
+        //else if(dist > 95)
+        //{
+        //    aiController.SetDestination(tmpposition);
+        //}
         
     }
     void MoveToRandomPosition()
