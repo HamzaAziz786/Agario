@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public bool isCloneMore = true;
     int indexplayerchild = 0;
     public int[] scores;
+    public bool lockaction = false;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -88,7 +89,10 @@ public class PlayerController : MonoBehaviour
     // and it is called before rendering a frame
     void Update()
     {
-
+        if (lockaction)
+        {
+            return;
+        }
         if (Input.GetKey(KeyCode.W) && isCloneMore == true)
         {
             if (transform.localScale.x >= 1)
@@ -108,14 +112,18 @@ public class PlayerController : MonoBehaviour
 
         }
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
-        if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 && IsSplit == true)
+        if (isSpace)
         {
-            IsSplit = false;
-
-            Split();
-
-            StartCoroutine(nameof(ResplitEnable));
+            ACtion.instance.Split();
         }
+        //if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 && IsSplit == true)
+        //{
+        //    IsSplit = false;
+
+        //    Split();
+
+        //    StartCoroutine(nameof(ResplitEnable));
+        //}
         if (isMove == true)
         {
             Vector3 mousePosition = Input.mousePosition;
@@ -263,19 +271,20 @@ public class PlayerController : MonoBehaviour
         }
         else if (collider.gameObject.CompareTag("OriginalPlayer"))
         {
-            PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
-            int userMass = CollidedObjectPlayerController.GetMass();
+            Destroy(ACtion.instance.clone);
+            //PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
+            //int userMass = CollidedObjectPlayerController.GetMass();
 
-            if (mass > userMass)
-            {
-                Debug.Log("mass > userMass: " + mass + " > " + userMass);
-                Eat(CollidedObject);
-                Destroy(this.gameObject);
-            }
+            //if (mass > userMass)
+            //{
+            //    Debug.Log("mass > userMass: " + mass + " > " + userMass);
+            //    Eat(CollidedObject);
+            //    Destroy(this.gameObject);
+            //}
 
-            // run SpawnPickup() for spawning again
-            spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
-                spawnControllerInstance.spawnDelay);
+            //// run SpawnPickup() for spawning again
+            //spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
+            //    spawnControllerInstance.spawnDelay);
         }
         else if (collider.gameObject.CompareTag("AI"))
         {
