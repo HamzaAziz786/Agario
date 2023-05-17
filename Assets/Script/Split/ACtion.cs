@@ -6,6 +6,7 @@ public class ACtion : MonoBehaviour
 {
     public static ACtion instance;
     public GameObject clone;
+    private Vector3 tempScale;
     public  void Awake()
     {
         instance = this;
@@ -16,7 +17,20 @@ public class ACtion : MonoBehaviour
         {
             return;
         }
-        clone =  Instantiate(gameObject, transform.position, Quaternion.identity);
+        if (clone == null)
+        {
+            clone = Instantiate(gameObject, transform.position, Quaternion.identity);
+            clone.gameObject.tag = "SplitClone";
+        }
+       
+       
+        tempScale = transform.localScale;
+        float biggerScaleX = tempScale.x - .5f;
+        float biggerScaleY = tempScale.y - .5f;
+        float biggerScaleZ = tempScale.z - .5f;
+
+        tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
+        transform.localScale = tempScale;
         clone.GetComponent<SplitForce>().enabled = true;
         clone.GetComponent<SplitForce>().SplitForceMethod();
     }

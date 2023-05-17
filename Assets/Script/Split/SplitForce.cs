@@ -30,7 +30,7 @@ public class SplitForce : MonoBehaviour
             enabled = false;
             return;
         }
-        transform.Translate(Vector3.forward * Speed * Time.deltaTime);
+       // transform.Translate(Vector3.forward * Speed * Time.deltaTime);
 
         Speed -= LoseSpeed * Time.deltaTime;
         if (Speed <= 0)
@@ -44,7 +44,8 @@ public class SplitForce : MonoBehaviour
     {
         yield return new WaitForSeconds(20f);
         GetComponent<BoxCollider>().isTrigger = true;
-       
-        
+        PlayerController.CountSplit--;
+
+
     }
 }

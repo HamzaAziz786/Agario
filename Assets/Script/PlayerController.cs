@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     int indexplayerchild = 0;
     public int[] scores;
     public bool lockaction = false;
+    public static int CountSplit=0;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -114,7 +115,24 @@ public class PlayerController : MonoBehaviour
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
         if (isSpace)
         {
-            ACtion.instance.Split();
+            if (transform.localScale.x <= 2 && CountSplit<3)
+            {
+                return;
+            }
+            else
+            {
+                CountSplit++;
+                tempScale = transform.localScale;
+                float biggerScaleX = tempScale.x - .5f * growingSize;
+                float biggerScaleY = tempScale.y - .5f * growingSize;
+                float biggerScaleZ = tempScale.z - .5f * growingSize;
+
+                tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
+                transform.localScale = tempScale;
+                ACtion.instance.Split();
+
+            }
+
         }
         //if (isSpace && mass >= splitLimit && transform.localScale.x >= 1 && IsSplit == true)
         //{
@@ -193,7 +211,7 @@ public class PlayerController : MonoBehaviour
         if (collider.gameObject.CompareTag("Pickup"))
         {
 
-            
+
 
 
             scores[0] = SpawnController.instance.ScoreList[0];
@@ -269,6 +287,19 @@ public class PlayerController : MonoBehaviour
             spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
                 spawnControllerInstance.spawnDelay);
         }
+        //SplitClone
+        else if (collider.gameObject.CompareTag("SplitClone"))
+        {
+            tempScale = transform.localScale;
+            float biggerScaleX = tempScale.x + .5f;
+            float biggerScaleY = tempScale.y + .5f;
+            float biggerScaleZ = tempScale.z + .5f;
+
+            tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
+            transform.localScale = tempScale;
+            Destroy(collider.gameObject);
+        }
+
         else if (collider.gameObject.CompareTag("OriginalPlayer"))
         {
             Destroy(ACtion.instance.clone);
