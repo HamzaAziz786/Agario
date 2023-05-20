@@ -46,8 +46,7 @@ public class PlayerController : MonoBehaviour
 
     public Queue<GameObject> queue = new Queue<GameObject>();
     public bool IsSplit = true;
-    public List<GameObject> playerClonePositions;
-    public List<GameObject> PlayerClones;
+
 
     public float distanceFromCamera = 10f;
     public float movementSpeed = .3f;
@@ -300,23 +299,23 @@ public class PlayerController : MonoBehaviour
             Destroy(collider.gameObject);
         }
 
-        else if (collider.gameObject.CompareTag("OriginalPlayer"))
-        {
-            Destroy(ACtion.instance.clone);
-            //PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
-            //int userMass = CollidedObjectPlayerController.GetMass();
+        //else if (collider.gameObject.CompareTag("OriginalPlayer"))
+        //{
+        //    .//Destroy(collider.gameObject);
+        //    //PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
+        //    //int userMass = CollidedObjectPlayerController.GetMass();
 
-            //if (mass > userMass)
-            //{
-            //    Debug.Log("mass > userMass: " + mass + " > " + userMass);
-            //    Eat(CollidedObject);
-            //    Destroy(this.gameObject);
-            //}
+        //    //if (mass > userMass)
+        //    //{
+        //    //    Debug.Log("mass > userMass: " + mass + " > " + userMass);
+        //    //    Eat(CollidedObject);
+        //    //    Destroy(this.gameObject);
+        //    //}
 
-            //// run SpawnPickup() for spawning again
-            //spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
-            //    spawnControllerInstance.spawnDelay);
-        }
+        //    //// run SpawnPickup() for spawning again
+        //    //spawnControllerInstance.InvokeRepeating("SpawnPickup", spawnControllerInstance.spawnTime,
+        //    //    spawnControllerInstance.spawnDelay);
+        //}
         else if (collider.gameObject.CompareTag("AI"))
         {
             //PlayerController CollidedObjectPlayerController = CollidedObject.GetComponent<PlayerController>();
@@ -342,14 +341,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    IEnumerator ResetVirusPlayerClone()
-    {
-        yield return new WaitForSeconds(4f);
-        for (int i = 0; i < playerClonePositions.Count; i++)
-        {
-            Destroy(this.transform.GetChild(i));
-        }
-    }
+   
     void SetTotalScoreText()
     {
         totalScoreText.text = "Score: " + totalScore.ToString();

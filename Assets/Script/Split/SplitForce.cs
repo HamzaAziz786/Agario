@@ -14,9 +14,9 @@ public class SplitForce : MonoBehaviour
     {
         GetComponent<BoxCollider>().isTrigger = false;
         GetComponent<PlayerController>().lockaction = true;
-        Vector3 dir = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float angle = Mathf.Atan2( dir.x , dir.z) * Mathf.Rad2Deg + 90f ;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        //Vector3 dir = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //float angle = Mathf.Atan2( dir.x , dir.z) * Mathf.Rad2Deg + 90f ;
+        //transform.rotation = Quaternion.Euler(0, angle, 0);
         Speed = DefaultSpeed;
         ApplySplitForce = true;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ACtion : MonoBehaviour
 {
     public static ACtion instance;
-    public GameObject clone;
+  
     private Vector3 tempScale;
     public  void Awake()
     {
@@ -13,17 +13,18 @@ public class ACtion : MonoBehaviour
     }
     public void Split()
     {
-        if (transform.localScale.x <= 2)
-        {
-            return;
-        }
-        if (clone == null)
-        {
-            clone = Instantiate(gameObject, transform.position, Quaternion.identity);
-            clone.gameObject.tag = "SplitClone";
-        }
+        //if (transform.localScale.x <= 2)
+        //{
+        //    return;
+        //}
+        //if (clone == null)
+        //{
+        //    clone = Instantiate(gameObject, transform.position, Quaternion.identity);
+        //    clone.gameObject.tag = "SplitClone";
+        //}
        
-       
+       GameObject clone = Instantiate(gameObject, transform.position, Quaternion.identity);
+        clone.gameObject.tag = "SplitClone";
         tempScale = transform.localScale;
         float biggerScaleX = tempScale.x - .5f;
         float biggerScaleY = tempScale.y - .5f;
@@ -33,5 +34,6 @@ public class ACtion : MonoBehaviour
         transform.localScale = tempScale;
         clone.GetComponent<SplitForce>().enabled = true;
         clone.GetComponent<SplitForce>().SplitForceMethod();
+        
     }
 }
