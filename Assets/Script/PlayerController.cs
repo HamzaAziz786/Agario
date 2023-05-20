@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,13 +57,14 @@ public class PlayerController : MonoBehaviour
     public int[] scores;
     public bool lockaction = false;
     public static int CountSplit=0;
+    public ACtion action;
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
     {
         spawnControllerInstance = mySpawner.GetComponent<SpawnController>();
         massControllerInstance = myMassController.GetComponent<MassController>();
-
+        action = this.GetComponent<ACtion>();
         initMass = massControllerInstance.initMass;
         pickupMass = massControllerInstance.pickupMass;
         if (prevMass != 0)
@@ -128,8 +130,8 @@ public class PlayerController : MonoBehaviour
 
                 tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
                 transform.localScale = tempScale;
-                ACtion.instance.Split();
 
+                action.Split();
             }
 
         }
@@ -259,8 +261,11 @@ public class PlayerController : MonoBehaviour
             {
                 IsSplit = false;
 
-                Split();
-
+                //Split();
+                action.Split();
+                action.Split();
+                action.Split();
+                action.Split();
                 StartCoroutine(nameof(ResplitEnable));
             }
         }

@@ -1743,6 +1743,7 @@ MonoBehaviour:
   isCloneMore: 1
   scores: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   lockaction: 0
+  action: {fileID: 629477221}
 --- !u!23 &629477216
 MeshRenderer:
   m_ObjectHideFlags: 0

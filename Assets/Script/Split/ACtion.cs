@@ -22,8 +22,8 @@ public class ACtion : MonoBehaviour
         //    clone = Instantiate(gameObject, transform.position, Quaternion.identity);
         //    clone.gameObject.tag = "SplitClone";
         //}
-       
-       GameObject clone = Instantiate(gameObject, transform.position, Quaternion.identity);
+        instance = this;
+        GameObject clone = Instantiate(gameObject, transform.position, Quaternion.identity);
         clone.gameObject.tag = "SplitClone";
         tempScale = transform.localScale;
         float biggerScaleX = tempScale.x - .5f;
