@@ -469,7 +469,6 @@ GameObject:
   - component: {fileID: 4471546975839378416}
   - component: {fileID: 4471546975839378419}
   - component: {fileID: 4471546975839378431}
-  - component: {fileID: 4471546975839378428}
   - component: {fileID: 6773435408297129601}
   m_Layer: 0
   m_Name: Ai
@@ -485,7 +484,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4471546975839378421}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.9491577, y: 0.91000366, z: -78.2}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -573,34 +572,9 @@ MonoBehaviour:
   aiController: {fileID: 0}
   Player: {fileID: 0}
   currrent_enemy_value: 0
-  xRange: 10
-  yRange: 5
-  zRange: 10
-  moveInterval: 2
   mass: 20
   score: 0
---- !u!195 &4471546975839378428
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4471546975839378421}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  target: {fileID: 0}
 --- !u!54 &6773435408297129601
 Rigidbody:
   m_ObjectHideFlags: 0
