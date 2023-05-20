@@ -13,25 +13,16 @@ public class ACtion : MonoBehaviour
     }
     public void Split()
     {
-        //if (transform.localScale.x <= 2)
-        //{
-        //    return;
-        //}
-        //if (clone == null)
-        //{
-        //    clone = Instantiate(gameObject, transform.position, Quaternion.identity);
-        //    clone.gameObject.tag = "SplitClone";
-        //}
-        instance = this;
         GameObject clone = Instantiate(gameObject, transform.position, Quaternion.identity);
         clone.gameObject.tag = "SplitClone";
-        tempScale = transform.localScale;
-        float biggerScaleX = tempScale.x - .5f;
-        float biggerScaleY = tempScale.y - .5f;
-        float biggerScaleZ = tempScale.z - .5f;
+        clone.gameObject.transform.localScale = this.transform.localScale;
+        //tempScale = transform.localScale;
+        //float biggerScaleX = tempScale.x - .5f;
+        //float biggerScaleY = tempScale.y - .5f;
+        //float biggerScaleZ = tempScale.z - .5f;
 
-        tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
-        transform.localScale = tempScale;
+        //tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
+        //transform.localScale = tempScale;
         clone.GetComponent<SplitForce>().enabled = true;
         clone.GetComponent<SplitForce>().SplitForceMethod();
         

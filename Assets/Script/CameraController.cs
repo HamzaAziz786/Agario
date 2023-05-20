@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour {
 		if(totalMass > prevTotalMass /*+ 4*/ /*&& totalMass < 60*/)
 		{
 			Debug.Log ("Camera higher");
-			offset.y = offset.y + .1f; /*+ (totalMass * 0.1f);*/
+			offset.y = offset.y + pointer.transform.localScale.x ;
 			prevTotalMass = totalMass;
 		}
         if (pointer == null)
@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour {
 		//Debug.Log ("mass: " + mass);
 		try
 		{
-            transform.position = pointer.transform.position + offset;
+            transform.position = pointer.transform.position + offset ;
         }
 		catch (System.Exception)
 		{

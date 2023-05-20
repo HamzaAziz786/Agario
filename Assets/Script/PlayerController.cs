@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
                 isCloneMore = false;
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
                 a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
-
+                this.GetComponent<BoxCollider>().isTrigger = true;
 
                 a.GetComponent<PlayerController>().isMove = false;
                 a.gameObject.tag = "PlayerShootingClone";
@@ -116,11 +116,7 @@ public class PlayerController : MonoBehaviour
         bool isSpace = Input.GetKeyDown(KeyCode.Space); // when space key is pushed
         if (isSpace)
         {
-            if (transform.localScale.x <= 2 && CountSplit<3)
-            {
-                return;
-            }
-            else
+            if (transform.localScale.x >=2  && CountSplit<3)
             {
                 CountSplit++;
                 tempScale = transform.localScale;
@@ -129,9 +125,14 @@ public class PlayerController : MonoBehaviour
                 float biggerScaleZ = tempScale.z - .5f * growingSize;
 
                 tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
-                transform.localScale = tempScale;
-
+                this.transform.localScale = tempScale;
+                this.GetComponent<BoxCollider>().isTrigger = false;
                 action.Split();
+                StartCoroutine(nameof(EnableReSplit));
+            }
+            else
+            {
+                return;
             }
 
         }
@@ -164,11 +165,16 @@ public class PlayerController : MonoBehaviour
 
 
     }
+    IEnumerator EnableReSplit()
+    {
+        yield return new WaitForSeconds(20);
+        CountSplit = 0;
+    }
     IEnumerator ResplitEnable()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(20f);
         IsSplit = true;
-
+        this.GetComponent<BoxCollider>().isTrigger = true;
     }
     // FixedUpdate() is called before performing any physics calculations
     void LateUpdate()
@@ -262,10 +268,14 @@ public class PlayerController : MonoBehaviour
                 IsSplit = false;
 
                 //Split();
-                action.Split();
-                action.Split();
-                action.Split();
-                action.Split();
+                for (int i = 0; i < 16; i++)
+                {
+                    action.Split();
+
+
+                }
+
+                this.GetComponent<BoxCollider>().isTrigger = false;
                 StartCoroutine(nameof(ResplitEnable));
             }
         }
@@ -337,6 +347,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                this.transform.localScale += collider.gameObject.transform.localScale;
                 Destroy(collider.gameObject);
             }
 
