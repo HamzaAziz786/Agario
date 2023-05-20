@@ -12,6 +12,7 @@ public class SplitForce : MonoBehaviour
 
     public void SplitForceMethod()
     {
+        GetComponent<BoxCollider>().enabled = false;
         GetComponent<BoxCollider>().isTrigger = false;
         GetComponent<PlayerController>().lockaction = true;
         //Vector3 dir = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -35,6 +36,7 @@ public class SplitForce : MonoBehaviour
         Speed -= LoseSpeed * Time.deltaTime;
         if (Speed <= 0)
         {
+            GetComponent<BoxCollider>().enabled = true;
             enabled = false;
             GetComponent<PlayerController>().lockaction = false;
             StartCoroutine(nameof(TriggerOn));
