@@ -7,27 +7,24 @@ using UnityEngine.UI;
 
 public class AI : MonoBehaviour
 {
-    public static AI aiInstance;
-    public Transform aiController;
+   
     public GameObject Player;
-    //public Text Scoretext;
-    //public Text Masstext;
+   
     public int currrent_enemy_value;
    
     public int mass;
     public int score;
-    public GameObject target;
+    private GameObject target;
     Vector3 tmpposition;
+    
+    public string targetTag = "Pickup";
     private float speed = 5f;
-    private void Awake()
-    {
-        aiInstance = this;
-        
-    }
+    private GameObject nearestTarget;
     private void Start()
     {
         try
         {
+            FindNearestTarget();
             Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
         }
         catch (System.Exception)
@@ -35,33 +32,47 @@ public class AI : MonoBehaviour
 
             throw;
         }
-        target = GameObject.FindWithTag("Pickup");
+       
 
-        //tmpposition = this.transform.position;
-
+        
+        
     }
     void Update()
     {
-        // aiController.SetDestination(Player.transform.position * Time.deltaTime);
-        target = GameObject.FindWithTag("Pickup");
 
-        if (target != null)
+        if (nearestTarget != null)
         {
-            // Calculate the direction to the target
-            Vector3 direction = target.transform.position - transform.position;
+            // Calculate the direction to the nearest target
+            Vector3 direction = nearestTarget.transform.position - transform.position;
             direction.Normalize();
 
-            // Move towards the target
+            // Move towards the nearest target
             transform.Translate(direction * speed * Time.deltaTime);
         }
+
     }
-  
+    private void FindNearestTarget()
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
+        float nearestDistance = 20f/*Mathf.Infinity*/;
+
+        foreach (GameObject target in targets)
+        {
+            float distance = Vector3.Distance(transform.position, target.transform.position);
+
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestTarget = target;
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
        
         if (other.gameObject.CompareTag("Pickup"))
         {
-            target = GameObject.FindWithTag("Pickup");
+            
             mass += 1;
             score += 1;
             SpawnController.instance.ScoreText[currrent_enemy_value].text = "Score:"+score.ToString();
@@ -78,15 +89,5 @@ public class AI : MonoBehaviour
             
         }
     }
-    public void FindTarget()
-    {
-        target = GameObject.FindWithTag("Pickup");
-
-        // Check if a game object with the specified tag was found
-        if (target != null)
-        {
-            // Do something with the target game object
-            Debug.Log("Target found: " + target.name);
-        }
-    }
+    
 }
