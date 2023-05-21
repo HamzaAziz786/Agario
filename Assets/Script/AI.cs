@@ -58,27 +58,14 @@ public class AI : MonoBehaviour
         foreach (GameObject target in targets)
         {
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            float PlayerDistanceCount = Vector3.Distance(transform.position, Player.transform.position);
+            
 
             if (distance < nearestDistance)
             {
                 nearestDistance = distance;
                 nearestTarget = target;
             }
-            if (PlayerDistanceCount < nearestDistance)
-            {
-                nearestDistance = distance;
-                nearestTarget = target;
-                speed = 20f;
-
-            }
-            if (PlayerDistanceCount > nearestDistance)
-            {
-                nearestDistance = distance;
-                nearestTarget = target;
-                speed = 5f;
-
-            }
+            
         }
     }
     private void OnTriggerEnter(Collider other)
