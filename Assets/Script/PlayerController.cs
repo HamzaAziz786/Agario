@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 isCloneMore = false;
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-                a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
+                a.transform.Translate(Vector3.forward * 50 * Time.deltaTime);
                 this.GetComponent<BoxCollider>().isTrigger = true;
 
                 a.GetComponent<PlayerController>().isMove = false;

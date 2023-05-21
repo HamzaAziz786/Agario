@@ -14,8 +14,7 @@ public class AI : MonoBehaviour
    
     public int mass;
     public int score;
-    private GameObject target;
-    Vector3 tmpposition;
+    
     
     public string targetTag = "Pickup";
     private float speed = 5f;
@@ -39,7 +38,7 @@ public class AI : MonoBehaviour
     }
     void Update()
     {
-
+        FindNearestTarget();
         if (nearestTarget != null)
         {
             // Calculate the direction to the nearest target
@@ -54,16 +53,31 @@ public class AI : MonoBehaviour
     private void FindNearestTarget()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-        float nearestDistance = 20f/*Mathf.Infinity*/;
+        float nearestDistance = 100f/*Mathf.Infinity*/;
 
         foreach (GameObject target in targets)
         {
             float distance = Vector3.Distance(transform.position, target.transform.position);
+            float PlayerDistanceCount = Vector3.Distance(transform.position, Player.transform.position);
 
             if (distance < nearestDistance)
             {
                 nearestDistance = distance;
                 nearestTarget = target;
+            }
+            if (PlayerDistanceCount < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestTarget = target;
+                speed = 20f;
+
+            }
+            if (PlayerDistanceCount > nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestTarget = target;
+                speed = 5f;
+
             }
         }
     }
