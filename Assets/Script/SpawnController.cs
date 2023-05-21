@@ -109,4 +109,18 @@ public class SpawnController : MonoBehaviour
         target.GetComponent<Renderer>()
             .material.color = RandomColor;
     }
+    public void RemoveAndAddAI(GameObject RemoveAI)
+    {
+        EnemiesList.Remove(RemoveAI);
+        Vector3 randomPostion = GenerateRandomPosition();
+        Ai = Instantiate(Ai, randomPostion, transform.rotation, ParentAI.transform);
+        Ai.gameObject.name = countenemies.ToString();
+        Ai.GetComponent<AI>().mass = Random.Range(25, 100);
+        Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
+        EnemiesList.Add(Ai);
+
+        MassText[countenemies].text = "Mass :" + EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
+        ScoreText[countenemies].text = "Score :" + EnemiesList[countenemies].GetComponent<AI>().score.ToString();
+        countenemies++;
+    }
 }

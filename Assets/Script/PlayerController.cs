@@ -348,6 +348,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 this.transform.localScale += collider.gameObject.transform.localScale;
+                SpawnController.instance.RemoveAndAddAI(collider.gameObject);
                 Destroy(collider.gameObject);
             }
 
