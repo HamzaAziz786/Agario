@@ -50,6 +50,7 @@ public class SpawnController : MonoBehaviour
         if (currentNumberOfPickups % 20 == 0 && EnemiesList.Count<10)
         {
             Ai = Instantiate(Ai, randomPostion, transform.rotation,ParentAI.transform);
+           
             Ai.gameObject.name = countenemies.ToString();
             Ai.GetComponent<AI>().mass = Random.Range(25, 100);
             Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
@@ -101,7 +102,7 @@ public class SpawnController : MonoBehaviour
         int randomPositionX = Random.Range(-mapsizeX + 1, mapsizeX - 1);
         int randomPositionZ = Random.Range(-mapsizeZ + 1, mapsizeZ - 1);
 
-        Vector3 position = new Vector3(randomPositionX, 0, randomPositionZ);
+        Vector3 position = new Vector3(randomPositionX, 0.9100037f, randomPositionZ);
         return position;
     }
 

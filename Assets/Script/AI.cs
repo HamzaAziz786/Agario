@@ -26,7 +26,7 @@ public class AI : MonoBehaviour
     private GameObject nearestAITarget;
 
     public bool isAgressive;
-
+    private float initialYPosition;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class AI : MonoBehaviour
             throw;
         }
 
-
+        initialYPosition = transform.position.y;
 
 
     }
@@ -86,8 +86,8 @@ public class AI : MonoBehaviour
            
         }
 
-
-
+        this.transform.position = new Vector3(this.transform.position.x,
+            initialYPosition,this.transform.position.z);
     }
     private void FindNearestTarget()
     {
