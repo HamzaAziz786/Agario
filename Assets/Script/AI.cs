@@ -19,6 +19,14 @@ public class AI : MonoBehaviour
     public string targetTag = "Pickup";
     private float speed = 5f;
     private GameObject nearestTarget;
+
+
+    #region PlayerDetection
+    public float PlayerFacespeed = 5f;
+    public float detectionRange = 20f;
+    public GameObject targetObject; 
+    #endregion
+
     private void Start()
     {
         try
@@ -39,14 +47,33 @@ public class AI : MonoBehaviour
     void Update()
     {
         FindNearestTarget();
-        if (nearestTarget != null)
-        {
-            // Calculate the direction to the nearest target
-            Vector3 direction = nearestTarget.transform.position - transform.position;
-            direction.Normalize();
+        Vector3 Playerdirection = Player.transform.position - transform.position;
+        float distanceToTarget = Playerdirection.magnitude;
 
-            // Move towards the nearest target
-            transform.Translate(direction * speed * Time.deltaTime);
+        if (distanceToTarget <= detectionRange)
+        {
+            // Move in the opposite direction
+            if (Player.transform.localScale.x > this.transform.localScale.x)
+            {
+                transform.Translate(-Playerdirection.normalized * speed * Time.deltaTime * 20);
+            }
+            else
+            {
+                transform.Translate(Playerdirection.normalized * speed * Time.deltaTime * 20);
+            }
+            
+        }
+        else
+        {
+            if (nearestTarget != null)
+            {
+                // Calculate the direction to the nearest target
+                Vector3 direction = nearestTarget.transform.position - transform.position;
+                direction.Normalize();
+
+                // Move towards the nearest target
+                transform.Translate(direction * speed * Time.deltaTime);
+            }
         }
 
     }
@@ -66,6 +93,18 @@ public class AI : MonoBehaviour
                 nearestTarget = target;
             }
             
+        }
+    }
+
+    public void FindPlayerDetection()
+    {
+        Vector3 direction = Player.transform.position - transform.position;
+        float distanceToTarget = direction.magnitude;
+
+        if (distanceToTarget <= detectionRange)
+        {
+            // Move in the opposite direction
+            transform.Translate(-direction.normalized * speed * Time.deltaTime);
         }
     }
     private void OnTriggerEnter(Collider other)

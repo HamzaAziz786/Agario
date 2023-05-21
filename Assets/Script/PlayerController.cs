@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 isCloneMore = false;
                 GameObject a = Instantiate(this.gameObject, this.transform.position, Quaternion.identity);
-                a.transform.Translate(Vector3.forward * 50 * Time.deltaTime);
+                a.transform.Translate(Vector3.forward * 200 * Time.deltaTime);
                 this.GetComponent<BoxCollider>().isTrigger = true;
 
                 a.GetComponent<PlayerController>().isMove = false;
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 4 /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 2 /** Time.deltaTime*/);
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
