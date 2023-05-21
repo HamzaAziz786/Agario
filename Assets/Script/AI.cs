@@ -25,7 +25,7 @@ public class AI : MonoBehaviour
     private GameObject nearestTarget;
     private GameObject nearestAITarget;
 
-
+    public bool isAgressive;
 
 
     private void Start()
@@ -52,13 +52,22 @@ public class AI : MonoBehaviour
         PlayerDirection.Normalize();
         if (PlayerDisctance < 70)
         {
-            if (Player.transform.localScale.x < this.transform.localScale.x)
+            if(isAgressive)
             {
-                transform.Translate(PlayerDirection * speed * Time.deltaTime);
+                if (Player.transform.localScale.x < this.transform.localScale.x)
+                {
+                    transform.Translate(PlayerDirection * speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Translate(-PlayerDirection * speed * Time.deltaTime);
+                }
             }
-            else
+            else if (!isAgressive)
             {
-                transform.Translate(-PlayerDirection* speed * Time.deltaTime);
+               
+                    transform.Translate(-PlayerDirection * speed * Time.deltaTime);
+                
             }
 
         }

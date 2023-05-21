@@ -54,7 +54,15 @@ public class SpawnController : MonoBehaviour
             Ai.GetComponent<AI>().mass = Random.Range(25, 100);
             Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
             EnemiesList.Add(Ai);
-          
+            if (EnemiesList.Count % 2 == 0)
+            {
+                Ai.GetComponent<AI>().isAgressive = false;
+            }
+            else if (EnemiesList.Count % 2 != 0)
+            {
+                Ai.GetComponent<AI>().isAgressive = true;
+            }
+
             MassText[countenemies].text = "Mass :"+EnemiesList[countenemies].GetComponent<AI>().mass.ToString();
             ScoreText[countenemies].text = "Score :" + EnemiesList[countenemies].GetComponent<AI>().score.ToString();
             countenemies++;
