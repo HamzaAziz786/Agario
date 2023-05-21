@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 2 /** Time.deltaTime*/);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 4 /** Time.deltaTime*/);
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
