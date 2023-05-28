@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour
     public bool lockaction = false;
     public static int CountSplit=0;
     public ACtion action;
+
+    private Rigidbody rb;
+
     // Use this for initialization
     // all of the Start() is called on the first frame that the script is active
     void Start()
@@ -85,6 +88,8 @@ public class PlayerController : MonoBehaviour
         eatableStart = false;
 
         prevMass = mass;
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update() is called once per frame
@@ -146,13 +151,19 @@ public class PlayerController : MonoBehaviour
         //}
         if (isMove == true)
         {
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = distanceFromCamera;
+            //Vector3 mousePosition = Input.mousePosition;
+            //mousePosition.z = distanceFromCamera;
 
-            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            targetPosition.y = transform.position.y;
+            //Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            //targetPosition.y = transform.position.y;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 4 /** Time.deltaTime*/);
+            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed / 4 /** Time.deltaTime*/);
+
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+
+            Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
+            rb.velocity = movement * followingSpeed;
 
         }
         //if ((transform.position - followingTarget.position).magnitude > boundary) { // prevent shittering
