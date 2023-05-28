@@ -389,9 +389,9 @@ public class PlayerController : MonoBehaviour
         massControllerInstance.IncreaseMass(pickupMass);
 
         tempScale = transform.localScale;
-        float biggerScaleX = tempScale.x + growingSize;
-        float biggerScaleY = tempScale.y + growingSize;
-        float biggerScaleZ = tempScale.z + growingSize;
+        float biggerScaleX = tempScale.x + .1f;
+        float biggerScaleY = tempScale.y + .1f;
+        float biggerScaleZ = tempScale.z + .1f;
 
         tempScale.Set(biggerScaleX, biggerScaleY, biggerScaleZ);
         transform.localScale = tempScale;

@@ -23,18 +23,17 @@ public class CameraController : MonoBehaviour {
 
 		offset = transform.position - pointer.transform.position;
 
-		prevTotalMass = (float)massControllerInstance.prevTotalMass;
+		prevTotalMass = pointer.transform.localScale.x;
 	}
 
 	void Update () {
-		
-		totalMass = (float)massControllerInstance.totalMass;
 
+		totalMass = pointer.transform.localScale.x;
 		// camera get higher when you eat 5 pickups
-		if(totalMass > prevTotalMass /*+ 4*/ /*&& totalMass < 60*/)
+		if (totalMass > prevTotalMass /*+ 4*/ /*&& totalMass < 60*/)
 		{
 			Debug.Log ("Camera higher");
-			offset.y = offset.y + pointer.transform.localScale.x ;
+			offset.y = offset.y + pointer.transform.localScale.x * 0.01f ;
 			prevTotalMass = totalMass;
 		}
         if (pointer == null)

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MassController : MonoBehaviour {
 
-	public int initMass = 25;
+	public int initMass = 0;
 	public int prevMass = 0;
-	public int mass = 25;
+	public int mass = 0;
 	public int pickupMass = 1;
 
 	public int totalMass;

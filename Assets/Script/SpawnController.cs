@@ -52,7 +52,7 @@ public class SpawnController : MonoBehaviour
             Ai = Instantiate(Ai, randomPostion, transform.rotation,ParentAI.transform);
            
             Ai.gameObject.name = countenemies.ToString();
-            Ai.GetComponent<AI>().mass = Random.Range(25, 100);
+            Ai.GetComponent<AI>().mass = 0;
             Ai.GetComponent<AI>().currrent_enemy_value = countenemies;
             EnemiesList.Add(Ai);
             if (EnemiesList.Count % 2 == 0)

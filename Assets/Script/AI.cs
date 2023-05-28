@@ -34,6 +34,7 @@ public class AI : MonoBehaviour
         {
             FindNearestTarget();
             Player = GameObject.FindGameObjectWithTag("OriginalPlayer");
+
         }
         catch (System.Exception)
         {
@@ -71,7 +72,7 @@ public class AI : MonoBehaviour
             }
 
         }
-        else if (PlayerDisctance >= 150)
+        else if (PlayerDisctance >= 70)
         {
             FindNearestTarget();
             if (nearestTarget != null)
